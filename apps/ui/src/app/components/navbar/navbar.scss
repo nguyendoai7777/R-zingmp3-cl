@@ -1,0 +1,48 @@
+.appbar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  .rotate-180 {
+    transform: rotate(180deg);
+  }
+  .search-box {
+    width: 40%;
+    border-radius: 100px;
+    padding: 7px 11px;
+    background-color: rgba(255, 255, 255, .1);
+    .search-input {
+      margin-left: 7px;
+      border: 0;
+      width: 100%;
+      outline: none;
+      background-color: transparent;
+      &::placeholder {
+        font-size: 15px;
+        color: #dcdcdc;
+      }
+    }
+  }
+  .icon-nav-box {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .1);
+    &:last-child {
+      margin-right: 0;
+      background-color: rgba(255, 255, 255, .6);
+    }
+    .MuiIconButton-root {
+      padding: 8px;
+    }
+    &.fix-image {
+      .theme-box {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+}

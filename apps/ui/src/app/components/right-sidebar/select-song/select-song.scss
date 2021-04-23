@@ -1,0 +1,83 @@
+@mixin text-ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.song-wrap {
+  overflow: hidden;
+  border-radius: 5px;
+  &.playing-song {
+    background-color: #7200A1;
+    .song-info .song-actions {
+      background-color: #7200A1;
+    }
+  }
+  .song-thumb {
+    cursor: pointer;
+    position: relative;
+    .thumb-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.40);
+    }
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  .song-info {
+    position: relative;
+    width: calc(100% - 47px);
+    margin-left: 7px;
+    .song-name {
+      user-select: none;
+      font-weight: bolder;
+      @include text-ellipsis;
+    }
+    .song-artist {
+      user-select: none;
+      font-size: 11px;
+      color: #dcdcdc;
+      @include text-ellipsis
+    }
+    .song-actions {
+      cursor: default;
+      align-items: center;
+      left: calc(100% + 10px);
+      padding: 0 10px;
+      top: 0;
+      display: flex;
+      height: 100%;
+      position: absolute;
+      background-color: #3A3344;
+      transition: .3s;
+      .small-action {
+        transition: .25s;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        padding: 4px;
+        border-radius: 50%;
+        &:hover {
+          background-color: #440061;
+        }
+      }
+    }
+  }
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    .song-thumb {
+    }
+    .song-info .song-actions {
+      left: calc(100% - 80px);
+    }
+  }
+}

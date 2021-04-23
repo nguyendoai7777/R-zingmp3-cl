@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 30.89 26.89">
+    <defs>
+        <style>.cls-1{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{fill:url(#linear-gradient);}.cls-4{fill:url(#linear-gradient-2);}</style>
+        <clipPath id="clip-path" transform="translate(0.98 1.17)">
+            <polygon class="cls-1" points="0 6.42 5.81 0.05 12.7 0.05 12.7 3.97 13.7 4.99 16.68 4.99 17.76 4 17.76 0.05 23.74 0 29.32 6.42 26.38 11.48 24.76 9.99 23.76 9.99 23.76 24.99 5.75 24.99 5.77 10.94 5.78 9.98 4.79 9.98 3.21 11.63 0 6.42"/>
+        </clipPath>
+        <linearGradient id="linear-gradient" x1="26.45" y1="3.29" x2="16.37" y2="26.52" gradientUnits="userSpaceOnUse">
+            <stop offset="0.11" stop-color="#ffbe3b"/>
+            <stop offset="0.36" stop-color="#d3e210"/>
+            <stop offset="0.37" stop-color="#c9e219"/>
+            <stop offset="0.49" stop-color="#84df5b"/>
+            <stop offset="0.6" stop-color="#4ddd90"/>
+            <stop offset="0.69" stop-color="#26dcb5"/>
+            <stop offset="0.77" stop-color="#0edbcc"/>
+            <stop offset="0.81" stop-color="#05dbd5"/>
+        </linearGradient>
+        <linearGradient id="linear-gradient-2" x1="6.17" y1="1.5" x2="16.18" y2="29.1" gradientUnits="userSpaceOnUse">
+            <stop offset="0.16" stop-color="#ff5f7a"/>
+            <stop offset="0.24" stop-color="#f23846"/>
+            <stop offset="0.32" stop-color="#e50e0e"/>
+            <stop offset="0.52" stop-color="#f72181"/>
+            <stop offset="0.62" stop-color="#ff2ab8"/>
+            <stop offset="0.81" stop-color="#3f4cff"/>
+        </linearGradient>
+    </defs>
+    <g id="Layer_2">
+        <g id="Layer_1-2">
+            <g class="cls-2">
+                <polygon class="cls-3" points="14.94 5.53 15.19 26.89 26.77 26.85 25.75 12.04 28.09 12.85 30.89 7.36 28.81 1.62 24.09 0 19.53 0.55 18.04 1.17 18.13 3.62 14.94 5.53"/>
+                <polygon class="cls-4" points="0 7.62 6.55 0.3 15.28 0.21 15.45 26.72 5.75 26.72 5.96 13.11 3.32 14.21 0 7.62"/>
+            </g>
+        </g>
+    </g>
+</svg>

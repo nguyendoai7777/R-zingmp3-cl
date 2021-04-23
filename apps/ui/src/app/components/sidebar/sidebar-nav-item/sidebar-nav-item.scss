@@ -1,0 +1,27 @@
+.nav {
+  width: 100%;
+  display: block;
+  a {
+    display: block;
+    text-decoration: none !important;
+    transition: .15s !important;
+    span {
+      color: #e5e5e5 !important;
+    }
+  }
+  .nav-item {
+    border-radius: 0 !important;
+    display: block !important;
+    padding: 10px 25px !important;
+    width: 100% !important;
+    text-align: left !important;
+    border-left: 3px solid transparent !important;
+    &:hover a {
+      color: white;
+    }
+  }
+  .activated-route .nav-item {
+    border-left: 3px solid #7200A1 !important;
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}

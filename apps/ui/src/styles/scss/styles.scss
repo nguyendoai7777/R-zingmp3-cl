@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+$bg-primary: #432275;
+[app-theme="mp3"] {
+  --bg-purple-primary: #432275;
+  --bg-purple-primary-dark: #231B2E;
+  --layout-bg: #170f23;
+  --sidebar-popup-bg: #2a213a;
+  --alpha-layout-bg: rgba(41, 21, 71, 0.8);
+  --queue-player-popup-bg: #120822;
+  --blur-queue-bg: rgba(30, 21, 47, 0.9019607843137255);
+  --purple-primary: #7200a1;
+  --link-text-hover: #c662ef;
+  --chart-bg-img-alpha: rgba(32, 19, 53, 0.9);
+}
+* {
+  color: white;
+}
+@font-face {
+  font-family: iconFont;
+  src: url("../../assets/fonts/icomoon.woff"),
+  url("../../assets/fonts/icomoon.ttf"),
+  url("../../assets/fonts/icomoon.eot");
+}
+.ico-icon {
+  font-style: normal;
+  font-family: iconFont, serif;
+  &.icon-library:after {
+    content: "\e901";
+    color: white;
+  }
+}
+.MuiButton-root {
+  text-transform: unset !important;
+}
+.icon-side-box,
+.icon-nav-box {
+  .MuiIconButton-label svg {
+    fill: #dcdcdc;
+  }
+}
+@media (min-width: 600px) {
+  .MuiTab-root {
+    min-width: unset !important;
+  }
+}
