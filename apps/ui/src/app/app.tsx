@@ -15,48 +15,47 @@ import Category from './screens/category/category';
 import MV from './screens/mv/mv';
 import Top100 from './screens/top-100/top-100';
 import NotFound from './screens/not-found/not-found';
-import { getEndPointUrl } from './module/module';
 import Navbar from './components/navbar/navbar';
 import RightSidebar from './components/right-sidebar/right-sidebar';
+import $ from 'jquery';
+
 
 export function App() {
-  const currentRoute = getEndPointUrl();
-  useEffect(() => {
-    console.log(`my current route: ${currentRoute}`);
-  }, []);
   return (
     <Router>
       <div className='d-flex body'>
         <Sidebar />
         <div className='main'>
           <Navbar />
-          <Switch>
-            <Route exact={true} path='/person'>
-              <Personal />
-            </Route>
-            <Route exact={true} path='/'>
-              <Discovery />
-            </Route>
-            <Route exact={true} path='/zing-charts'>
-              <Charts />
-            </Route>
-            <Route exact={true} path='/follow'>
-              <Follow />
-            </Route>
-            <Route exact={true} path='/new-release'>
-              <NewRelease />
-            </Route>
-            <Route exact={true} path='/category'>
-              <Category />
-            </Route>
-            <Route exact={true} path='/top-100'>
-              <Top100 />
-            </Route>
-            <Route exact={true} path='/mv'>
-              <MV />
-            </Route>
-            <Route path='*' exact={true} component={NotFound} />
-          </Switch>
+          <div className='wrapper app-scroll'>
+            <Switch>
+              <Route exact={true} path='/person'>
+                <Personal />
+              </Route>
+              <Route exact={true} path='/'>
+                <Discovery />
+              </Route>
+              <Route exact={true} path='/zing-charts'>
+                <Charts />
+              </Route>
+              <Route exact={true} path='/follow'>
+                <Follow />
+              </Route>
+              <Route exact={true} path='/new-release'>
+                <NewRelease />
+              </Route>
+              <Route exact={true} path='/category'>
+                <Category />
+              </Route>
+              <Route exact={true} path='/top-100'>
+                <Top100 />
+              </Route>
+              <Route exact={true} path='/mv'>
+                <MV />
+              </Route>
+              <Route path='*' exact={true} component={NotFound} />
+            </Switch>
+          </div>
         </div>
         <RightSidebar />
       </div>

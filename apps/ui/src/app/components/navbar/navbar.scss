@@ -4,6 +4,7 @@
   align-items: center;
   position: absolute;
   top: 0;
+  z-index: 4;
   left: 0;
   .rotate-180 {
     transform: rotate(180deg);

@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import './select-song.scss';
+import './suggest-song.scss';
 import { FavoriteBorder, MoreHoriz, PlayArrow } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import { SongControl } from '../interface';
 import { Link, useParams } from 'react-router-dom';
 
 
-const SelectSong: React.FC<SongControl> = ({ chooseThisSong, songName, songArtist, thumb, isActive }) => {
-
-
+const SuggestSong: React.FC<SongControl> = ({ chooseThisSong, songName, songArtist, thumb, isActive }) => {
   return (
     <div className={`song-wrap p-2 d-flex ${isActive ? 'playing-song' : ''}`}>
       <div className='song-thumb' onClick={chooseThisSong}>
@@ -39,4 +37,4 @@ const SelectSong: React.FC<SongControl> = ({ chooseThisSong, songName, songArtis
   );
 };
 
-export default SelectSong;
+export default SuggestSong;

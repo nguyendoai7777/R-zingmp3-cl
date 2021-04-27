@@ -11,9 +11,13 @@ $bg-primary: #432275;
   --purple-primary: #7200a1;
   --link-text-hover: #c662ef;
   --chart-bg-img-alpha: rgba(32, 19, 53, 0.9);
+  --text-purple: #c662ef;
 }
 * {
   color: white;
+}
+bodY {
+  overflow: hidden;
 }
 @font-face {
   font-family: iconFont;
@@ -31,6 +35,22 @@ $bg-primary: #432275;
 }
 .MuiButton-root {
   text-transform: unset !important;
+}
+.app-scroll {
+  overflow-y: auto;
+  height: 100%;
+  &::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 10px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #8723a8;
+  }
+}
+.right-sidebar-box {
+  margin-right: -8px;
+  padding-bottom: 20px;
 }
 .icon-side-box,
 .icon-nav-box {

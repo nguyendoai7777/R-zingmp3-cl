@@ -2,7 +2,12 @@ export interface SongControl {
   chooseThisSong?: () => any;
   thumb: string;
   songName: string;
-  songArtist: string;
+  songArtist: ArtistInformation[];
   index?: number;
   isActive?: boolean;
+}
+
+export interface ArtistInformation {
+  artistName: string;
+  profileUrl: string;
 }

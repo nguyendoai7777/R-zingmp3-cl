@@ -1,7 +1,10 @@
 .main {
   position: relative;
-  width: 100%;
+  width: calc(100% - 560px);
   background-color: #170F23;
-  height: 100vh;
+  .wrapper {
+    height: 100vh;
+    transform: translateY(80px);
+  }
 }
 

@@ -17,7 +17,7 @@ const TabPanel: React.FC<TabPanelProps> = ({ index, value, children }) => {
     >
       {value === index && (
         <Box p={2}>
-          <div>{children}</div>
+          <div className="app-scroll right-sidebar-box">{children}</div>
         </Box>
       )}
     </div>

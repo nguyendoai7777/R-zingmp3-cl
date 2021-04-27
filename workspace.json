@@ -40,7 +40,9 @@
               "apps/ui/src/styles/scss/styles.scss",
               "apps/ui/src/styles/css/bootstrap.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js"
+            ],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
           "configurations": {

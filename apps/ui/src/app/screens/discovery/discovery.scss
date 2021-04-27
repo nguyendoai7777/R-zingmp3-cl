@@ -1,0 +1,21 @@
+.dc {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .dc-wrapper {
+    width: 70%;
+    .owl-carousel {
+      .owl-stage-outer {
+        .owl-stage {
+          .my-active {
+            transform: scale(1.3) !important;
+          }
+        }
+      }
+    }
+    .slide-item {
+
+    }
+  }
+
+}
