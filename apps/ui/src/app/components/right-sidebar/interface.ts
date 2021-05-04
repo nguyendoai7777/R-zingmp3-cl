@@ -1,4 +1,4 @@
-export interface SongControl {
+export interface SongProfile {
   chooseThisSong?: () => any;
   thumb: string;
   songName: string;
@@ -10,4 +10,5 @@ export interface SongControl {
 export interface ArtistInformation {
   artistName: string;
   profileUrl: string;
+  songUrl?: string;
 }

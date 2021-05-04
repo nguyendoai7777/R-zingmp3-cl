@@ -8,7 +8,7 @@ import { SONG_LIST } from './data';
 import TabPanel from './tabpanel';
 import SelectSong from './select-song/select-song';
 import { Link, useParams } from 'react-router-dom';
-import { SongControl } from './interface';
+import { SongProfile } from './interface';
 
 
 function a11yProps(index: number) {
@@ -42,7 +42,7 @@ const RightSidebar = () => {
   const [playingList, setPlayingList] = useState([]);
   const [playListSuggest, setPlayListSuggest] = useState(SONG_LIST);
   const [autoPlay, setAutoPlay] = useState(true);
-  const onChoseSong = (song: SongControl) => {
+  const onChoseSong = (song: SongProfile) => {
     setPlayingList([...playingList, song]);
     const newList = playListSuggest.filter(a => a.songName !== song.songName);
     setPlayListSuggest(newList);

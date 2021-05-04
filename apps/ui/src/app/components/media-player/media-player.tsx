@@ -5,80 +5,39 @@ import { FavoriteBorder, MoreHoriz, VolumeOff, VolumeUp } from '@material-ui/ico
 import MyTooltip from '../tooltip/tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import { OnPlay } from '../../../interfaces/action.interface';
+import { SONG_LIST } from '../right-sidebar/data';
 
 
 const MediaPlayer = () => {
-
     const [currentVolume, setCurrentVolume] = React.useState<number>(80);
     const [isMute, setIsMute] = React.useState<boolean>(false);
     const [randomState, setRandomState] = React.useState<boolean>(false);
-    //! audio controller
+    const [loopState, setLoopState] = React.useState<number>(0);
+    const subMedia = React.useRef<HTMLDivElement>();
+    //! start audio controller
     const [timePlaying, setTimePlaying] = React.useState<number>(0);
-    const [audioTimerDuration, setAudioTimerDuration] = React.useState<number>(null);
-    const [durStartTime, setDurStartTime] = React.useState<string>(null);
+    const [audioTimerDuration, setAudioTimerDuration] = React.useState<number>(0);
     const audioRef = useRef<HTMLAudioElement>();
     const audioDuration = (time) => {
-
       const hours = ('0' + Math.floor(time / 3600));
       const ch = Number(hours);
-      const minutes = `${Math.floor(time / 60)}`.length <= 1 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60);
+      const minutes = ('0' + Math.floor((time - ch * 3600) / 60)).slice(-2);
       const seconds = ('0' + Math.floor(time - Math.floor(time / 60) * 60)).slice(-2);
       return ch !== 0 ? `${hours}:${minutes}:${seconds}` : `${minutes}:${seconds}`;
     };
-    // change range
+
     const handleMediaControlTime = (event: never, newValue: number | number[]) => {
-      setTimePlaying(newValue as number);
-      console.log(audioRef.current.currentTime);
-      audioRef.current.currentTime = timePlaying;
-      const startTime = audioDuration(timePlaying);
-      setDurStartTime(startTime);
+      const val = newValue as number;
+      setTimePlaying(val);
+      audioRef.current.currentTime = val;
     };
 
     const isPlay = useSelector<OnPlay, OnPlay['isPlaying']>((state) => state.isPlaying);
     const dispatch = useDispatch();
 
-    // set value range
-    const handleVolume = (event: never, newValue: number | number[]) => {
-      setCurrentVolume(newValue as number);
-    };
-
-
-    const volumeControl = () => {
-      if (currentVolume === 0) {
-        setCurrentVolume(100);
-      }
-      setIsMute(!isMute);
-    };
-    const setRandom = () => {
-      setRandomState(!randomState);
-    };
     const setPlay = () => {
       dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: isPlay });
     };
-
-
-    useEffect(() => {
-      setIsMute(currentVolume < 0);
-    }, [currentVolume]);
-    useEffect(() => { // to set total duration of song
-      audioRef.current.addEventListener('loadedmetadata', (e) => {
-        setAudioTimerDuration(audioRef.current.duration);
-      });
-      console.log(Math.floor(audioTimerDuration));
-      const startTime = audioDuration(timePlaying);
-      setDurStartTime(startTime);
-      audioRef.current.addEventListener('timeupdate', _ => {
-        const current = audioRef.current.currentTime;
-        const startTime = audioDuration(current);
-        setDurStartTime(startTime);
-        setTimePlaying(current);
-        console.log('dang chay ne: ',  Math.floor(current), Math.floor(audioTimerDuration));
-        if (Math.floor(current) === Math.floor(audioTimerDuration)) {
-          console.log('=== roi```````````');
-          dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: false });
-        }
-      });
-    }, []);
     useEffect(() => {
       if (isPlay) {
         audioRef.current.play();
@@ -86,17 +45,76 @@ const MediaPlayer = () => {
         audioRef.current.pause();
       }
     }, [isPlay]);
+    //! end audio controller
+
+    //! start volume
+    const handleVolume = (event: never, newValue: number) => {
+      setCurrentVolume(newValue as number);
+      audioRef.current.volume = newValue / 100;
+    };
+    const toggleVolume = () => {
+      if (currentVolume === 0) {
+        setCurrentVolume(100);
+      }
+      setIsMute(!isMute);
+    };
+    useEffect(() => {
+      console.log(isMute);
+      if (isMute) {
+        audioRef.current.volume = 0;
+      } else {
+        audioRef.current.volume = currentVolume * ((isMute ? 0 : 1) / 100);
+      }
+      if (currentVolume > 60) {
+        subMedia.current.classList.add('volume-warning');
+      } else {
+        subMedia.current.classList.remove('volume-warning');
+      }
+    }, [currentVolume, isMute]);
+    useEffect(() => {
+      setIsMute(currentVolume < 0);
+
+    }, [currentVolume]);
+
+    //! end volume
+    const setRandom = () => {
+      setRandomState(!randomState);
+    };
+    const setLoop = () => {
+      setLoopState((loopState + 1) % 3);
+      console.log(loopState);
+    };
+    // set value range
+
+    useEffect(() => { // to set total duration of song
+      audioRef.current.addEventListener('loadedmetadata', (_) => {
+        const dur = Math.floor(audioRef.current.duration);
+        setAudioTimerDuration(dur);
+      });
+      audioRef.current.addEventListener('timeupdate', _ => {
+        const current = audioRef.current.currentTime;
+        setTimePlaying(current);
+        const dur = Math.floor(audioRef.current.duration);
+        if (Math.floor(current) === dur) {
+          dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: false });
+        }
+      });
+      console.log(subMedia);
+    }, [dispatch]);
+
 
     return (
       <div className='media-player-wrapper'>
-        <div className='d-flex px-4 py-2 align-items-center'>
+        <div className={`d-flex px-4 py-3 align-items-center ${isPlay ? 'spl' : ''}`}>
           <div className='media-info d-flex align-items-center'>
-            <div className='media-thumb playing'>
-              <img src='https://photo-resize-zmp3.zadn.vn/w240_r1x1_jpeg/cover/7/4/0/d/740d5e0fd272d2421d441e9fd5c08fdd.jpg' alt='' />
+            <div className={`media-thumb ${isPlay ? 'playing' : ''}`}>
+              <div className='thumbnail'>
+                <img src={SONG_LIST[0].thumb} alt='' />
+              </div>
             </div>
             <div className='media-detail-info ms-3'>
-              <div className='song-name'>Sắp tới sẽ là tao</div>
-              <div className='song-artist'>Mr. DxD</div>
+              <div className='song-name'>{SONG_LIST[0].songName}</div>
+              <div className='song-artist'>{SONG_LIST[0].songArtist[0].artistName}</div>
             </div>
             <div className='media-song-actions ms-2'>
               <IconButton className='small-action'>
@@ -138,16 +156,16 @@ const MediaPlayer = () => {
                     </svg>
                   </IconButton>
                 </MyTooltip>
-                <MyTooltip title='Lặp lại ' arrow>
-                  <IconButton>
+                <MyTooltip title={loopState === 0 ? 'Không lặp lại' : loopState === 1 ? 'Lặp lại toàn bộ' : 'Lặp lại 1 bài'} arrow>
+                  <IconButton onClick={setLoop}>
                     <svg className='control-size icon-control'>
-                      <use xlinkHref='#loop' />
+                      <use xlinkHref={loopState === 0 ? '#loop' : loopState === 1 ? '#loop-active' : '#loop-1'} />
                     </svg>
                   </IconButton>
                 </MyTooltip>
               </div>
               <div className='d-flex align-items-center justify-content-center'>
-                <div className='played-time pe-3'>{durStartTime}</div>
+                <div className={`played-time pe-3 ${isPlay ? 'playing' : ''}`}>{audioDuration(timePlaying)}</div>
                 <div className='w-50 align-items-center d-flex'>
                   <Slider
                     value={timePlaying}
@@ -156,14 +174,14 @@ const MediaPlayer = () => {
                     aria-labelledby='continuous-slider'
                   />
                   <audio controls id='app-audio' ref={audioRef} style={{ display: 'none' }}>
-                    <source src='../../../assets/audio/tim-hanh-tinh-khac.flac' />
+                    <source src={SONG_LIST[0].songArtist[0].songUrl} />
                   </audio>
                 </div>
                 <div className='played-time ps-3'>{audioDuration(audioTimerDuration)}</div>
               </div>
             </div>
           </div>
-          <div className='media-action d-flex align-items-center'>
+          <div className='media-sub-actions d-flex align-items-center'>
             <MyTooltip title='MV' arrow>
               <IconButton>
                 <svg className='control-size-huge icon-control'>
@@ -179,13 +197,13 @@ const MediaPlayer = () => {
               </IconButton>
             </MyTooltip>
             <div className='d-flex align-items-center'>
-              <IconButton onClick={volumeControl}>
+              <IconButton onClick={toggleVolume} className={`${currentVolume > 60 ? 'volume-warning-btn' : ''} `}>
                 {currentVolume * (isMute ? 0 : 1) > 0 ?
                   <VolumeUp style={{ fontSize: '30px' }} /> :
                   <VolumeOff style={{ fontSize: '30px' }} />}
                 {/*       {!volumeController && <VolumeOff style={{ fontSize: '30px' }} />}*/}
               </IconButton>
-              <div style={{ width: '130px' }} className='d-flex align-items-center ms-2'>
+              <div ref={subMedia} style={{ width: '130px' }} className='d-flex align-items-center ms-2'>
                 <Slider
                   value={currentVolume * (isMute ? 0 : 1)}
                   onChange={handleVolume}

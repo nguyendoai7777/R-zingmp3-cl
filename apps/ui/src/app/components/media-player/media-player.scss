@@ -1,18 +1,37 @@
+$warning: #ff5200;
 .media-player-wrapper {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: var(--bg-media-player);
+  .spl {
+    animation: is-playing-detected 10s infinite linear;
+  }
   .media-info {
     .media-thumb {
+      .thumbnail {
+        animation-play-state: paused;
+        -webkit-animation-play-state: paused;
+        -webkit-animation-name: infinity-rotate;
+        animation-name: infinity-rotate;
+        -webkit-animation-duration: 12s;
+        animation-duration: 12s;
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        animation-timing-function: linear;
+      }
       img {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
       }
       &.playing {
-        animation: infinity-rotate 10s infinite linear;
+        .thumbnail {
+          animation-play-state: running;
+          -webkit-animation-play-state: running;
+        }
       }
     }
   }
@@ -58,6 +77,12 @@
       max-width: 80px;
       min-width: 80px;
       text-align: center;
+      &:first-of-type {
+        color: #8c8c8c
+      }
+      &.playing {
+        animation: text-playing 2s infinite linear;
+      }
     }
     .main-control {
       margin: 0 12px;
@@ -82,6 +107,21 @@
           fill: var(--purple-primary);
         }
       }
+    }
+  }
+  .media-sub-actions {
+    .volume-warning {
+      .MuiSlider-root {
+        .MuiSlider-rail,
+        .MuiSlider-track,
+        .MuiSlider-thumb {
+          background-color: $warning;
+        }
+      }
+    }
+    .volume-warning-btn .MuiIconButton-label svg {
+      transition: .5s;
+      fill: $warning;
     }
   }
   .control-size {
@@ -131,9 +171,55 @@
 }
 @keyframes infinity-rotate {
   0% {
-    transform: rotate(0);
+    transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@keyframes text-playing {
+  0% {
+    color: #8c8c8c;
+  }
+  50% {
+    color: var(--purple-primary);
+  }
+  100% {
+    color: #8c8c8c;
+  }
+}
+@keyframes is-playing-detected {
+  0% {
+    box-shadow: 0 12px 35px var(--purple-primary);
+  }
+  10% {
+    box-shadow: 0 12px 35px var(--green-neon);
+  }
+  20% {
+    box-shadow: 0 12px 35px var(--deeppink);
+  }
+  30% {
+    box-shadow: 0 12px 35px var(--yellow-neon);
+  }
+  40% {
+    box-shadow: 0 12px 35px var(--blue-neon);
+  }
+  50% {
+    box-shadow: 0 12px 35px var(--purple-primary);
+  }
+  60% {
+    box-shadow: 0 12px 35px var(--green-neon);
+  }
+  70% {
+    box-shadow: 0 12px 35px var(--deeppink);
+  }
+  80% {
+    box-shadow: 0 12px 35px var(--yellow-neon);
+  }
+  90% {
+    box-shadow: 0 12px 35px var(--blue-neon);
+  }
+  100% {
+    box-shadow: 0 12px 35px var(--purple-primary);
   }
 }

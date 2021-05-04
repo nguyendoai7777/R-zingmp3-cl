@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import './select-song.scss';
 import { FavoriteBorder, MoreHoriz, PlayArrow } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
-import { SongControl } from '../interface';
+import { SongProfile } from '../interface';
 import { Link, useParams } from 'react-router-dom';
 
 
-const SelectSong: React.FC<SongControl> = ({ chooseThisSong, songName, songArtist, thumb, isActive }) => {
+const SelectSong: React.FC<SongProfile> = ({ chooseThisSong, songName, songArtist, thumb, isActive }) => {
 
 
   return (
