@@ -1,4 +1,4 @@
 import { createStore } from 'redux';
-import { routeReducer } from '../reducers/route-reducer';
+import { onPlayReducer } from '../reducers/on-play.reducer';
 
-export const store = createStore(routeReducer)
+export const store = createStore(onPlayReducer)

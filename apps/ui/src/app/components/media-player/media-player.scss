@@ -1,0 +1,139 @@
+.media-player-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-media-player);
+  .media-info {
+    .media-thumb {
+      img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
+      &.playing {
+        animation: infinity-rotate 10s infinite linear;
+      }
+    }
+  }
+  .media-detail-info {
+    .song-name {
+      font-weight: bolder;
+      font-size: 16px;
+    }
+    .song-artist {
+      font-size: 13px;
+    }
+  }
+  .media-song-actions {
+    .MuiIconButton-root {
+      padding: 8px;
+    }
+  }
+  .media-controls {
+    justify-content: center;
+    flex: 1 1 auto;
+    .icon-btn-group {
+      justify-content: center;
+      .icon-control-active {
+        fill: var(--purple-primary)
+      }
+    }
+    .control-group-btn .MuiSlider-root {
+      .MuiSlider-rail, .MuiSlider-track, .MuiSlider-thumb {
+        transition: .12s;
+      }
+      &:hover {
+        .MuiSlider-rail, .MuiSlider-track {
+          height: 5px;
+        }
+        .MuiSlider-thumb {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+    .played-time {
+      width: 80px;
+      max-width: 80px;
+      min-width: 80px;
+      text-align: center;
+    }
+    .main-control {
+      margin: 0 12px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      width: 40px;
+      border-style: solid;
+      border-width: 1px;
+      border-color: #fff;
+      transition: .15s;
+      .main-icon-btn {
+        transition: .15s;
+        width: 20px;
+        height: 20px;
+      }
+      &:hover {
+        border-color: var(--purple-primary);
+        .main-icon-btn {
+          fill: var(--purple-primary);
+        }
+      }
+    }
+  }
+  .control-size {
+    width: 24px;
+    height: 24px;
+  }
+  .control-size-huge {
+    width: 28px;
+    height: 28px;
+  }
+  .icon-control {
+    fill: white;
+  }
+  .icon-active {
+  }
+  .tt-btn {
+    position: relative;
+    .tt-box {
+      left: 0;
+      font-size: 12px;
+      border-radius: 4px;
+      padding: 8px 12px;
+      position: absolute;
+      bottom: calc(100% + 10px);
+      background-color: #2a2a2a;
+      width: fit-content;
+      white-space: nowrap;
+      /*    visibility: hidden;
+      opacity: 0;
+      z-index: 6;*/
+      &:after {
+        background-color: #2a2a2a;
+        position: absolute;
+        content: "";
+        width: 10px;
+        top: calc(100% - 2px);
+        height: 10px;
+        transform: rotate(45deg) translateX(-50%);
+        left: 50%;
+      }
+    }
+    &:hover .tt-box {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+@keyframes infinity-rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

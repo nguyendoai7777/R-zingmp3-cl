@@ -9,7 +9,7 @@ const Discovery = () => {
 
   return (
     <div className='dc'>
-      <div className='dc-wrapper'>
+      <div className='d'>
 
       </div>
     </div>

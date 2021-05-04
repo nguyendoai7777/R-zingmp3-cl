@@ -12,6 +12,7 @@ $bg-primary: #432275;
   --link-text-hover: #c662ef;
   --chart-bg-img-alpha: rgba(32, 19, 53, 0.9);
   --text-purple: #c662ef;
+  --bg-media-player: #120C1C;
 }
 * {
   color: white;
@@ -58,6 +59,32 @@ bodY {
     fill: #dcdcdc;
   }
 }
+.song-actions {
+  cursor: default;
+  align-items: center;
+  left: calc(100% + 10px);
+  padding: 0 10px;
+  top: 0;
+  display: flex;
+  height: 100%;
+  position: absolute;
+  background-color: #3A3344;
+  transition: .3s;
+  .small-action {
+    transition: .25s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 4px;
+    border-radius: 50%;
+    &:hover {
+      background-color: #440061;
+    }
+  }
+}
+
 @media (min-width: 600px) {
   .MuiTab-root {
     min-width: unset !important;

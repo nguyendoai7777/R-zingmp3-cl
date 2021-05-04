@@ -18,6 +18,7 @@ import NotFound from './screens/not-found/not-found';
 import Navbar from './components/navbar/navbar';
 import RightSidebar from './components/right-sidebar/right-sidebar';
 import $ from 'jquery';
+import MediaPlayer from './components/media-player/media-player';
 
 
 export function App() {
@@ -58,6 +59,7 @@ export function App() {
           </div>
         </div>
         <RightSidebar />
+        <MediaPlayer />
       </div>
     </Router>
   );
