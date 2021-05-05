@@ -1,4 +1,5 @@
 $warning: #ff5200;
+@import "./keyframe";
 .media-player-wrapper {
   position: fixed;
   bottom: 0;
@@ -8,19 +9,90 @@ $warning: #ff5200;
   .spl {
     animation: is-playing-detected 10s infinite linear;
   }
+  .media-spacing {
+    padding: 10px 35px;
+  }
   .media-info {
     .media-thumb {
       .thumbnail {
-        animation-play-state: paused;
-        -webkit-animation-play-state: paused;
-        -webkit-animation-name: infinity-rotate;
-        animation-name: infinity-rotate;
-        -webkit-animation-duration: 12s;
-        animation-duration: 12s;
-        -webkit-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-        -webkit-animation-timing-function: linear;
-        animation-timing-function: linear;
+        position: relative;
+        .thumbnail-effect {
+          animation-play-state: paused;
+          -webkit-animation-play-state: paused;
+          -webkit-animation-name: infinity-rotate;
+          animation-name: infinity-rotate;
+          -webkit-animation-duration: 12s;
+          animation-duration: 12s;
+          -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+          -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+        }
+        .note {
+          width: 10px;
+          height: 10px;
+          fill: #fff;
+          position: absolute;
+          opacity: 0;
+          top: calc(50% - 5px);
+          left: calc(50% - 5px);
+          -webkit-animation-name: bubble-1;
+          animation-name: bubble-1;
+          -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+          -webkit-animation-duration: 4.8s;
+          animation-duration: 4.8s;
+          -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+          -webkit-animation-play-state: paused;
+          animation-play-state: paused;
+          &.note- {
+            &1 {
+              animation-delay: 0s;
+            }
+            &2 {
+              animation-delay: 1.2s;
+            }
+            &3 {
+              animation-delay: 2.4s;
+            }
+            &4 {
+              animation-delay: 3.6s;
+            }
+          }
+        }
+        .kim {
+          position: absolute;
+          top: 0;
+          right: -10px;
+          width: 10px;
+          height: 36px;
+          fill: #fff;
+          transform-origin: top center -10px;
+          -webkit-animation-name: quay-kim;
+          animation-name: quay-kim;
+          -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+          -webkit-animation-duration: 2.8s;
+          animation-duration: 2.8s;
+          -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+          -webkit-animation-play-state: paused;
+          animation-play-state: paused;
+        }
+        &:after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          display: block;
+          left: 50%;
+          width: 12px;
+          height: 12px;
+          border: 2px solid #fff;
+          transform: translate(-50%, -50%);
+          background-color: #120C1C;
+          border-radius: 100px;
+        }
       }
       img {
         width: 70px;
@@ -29,8 +101,10 @@ $warning: #ff5200;
       }
       &.playing {
         .thumbnail {
-          animation-play-state: running;
-          -webkit-animation-play-state: running;
+          .thumbnail-effect, .note, .kim {
+            animation-play-state: running;
+            -webkit-animation-play-state: running;
+          }
         }
       }
     }
@@ -123,6 +197,19 @@ $warning: #ff5200;
       transition: .5s;
       fill: $warning;
     }
+    .divided-icon-btn {
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 40%;
+        width: 1px;
+        background-color: #727272;
+      }
+    }
   }
   .control-size {
     width: 24px;
@@ -167,59 +254,5 @@ $warning: #ff5200;
       visibility: visible;
       opacity: 1;
     }
-  }
-}
-@keyframes infinity-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-@keyframes text-playing {
-  0% {
-    color: #8c8c8c;
-  }
-  50% {
-    color: var(--purple-primary);
-  }
-  100% {
-    color: #8c8c8c;
-  }
-}
-@keyframes is-playing-detected {
-  0% {
-    box-shadow: 0 12px 35px var(--purple-primary);
-  }
-  10% {
-    box-shadow: 0 12px 35px var(--green-neon);
-  }
-  20% {
-    box-shadow: 0 12px 35px var(--deeppink);
-  }
-  30% {
-    box-shadow: 0 12px 35px var(--yellow-neon);
-  }
-  40% {
-    box-shadow: 0 12px 35px var(--blue-neon);
-  }
-  50% {
-    box-shadow: 0 12px 35px var(--purple-primary);
-  }
-  60% {
-    box-shadow: 0 12px 35px var(--green-neon);
-  }
-  70% {
-    box-shadow: 0 12px 35px var(--deeppink);
-  }
-  80% {
-    box-shadow: 0 12px 35px var(--yellow-neon);
-  }
-  90% {
-    box-shadow: 0 12px 35px var(--blue-neon);
-  }
-  100% {
-    box-shadow: 0 12px 35px var(--purple-primary);
   }
 }

@@ -6,13 +6,28 @@ import MyTooltip from '../tooltip/tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import { OnPlay } from '../../../interfaces/action.interface';
 import { SONG_LIST } from '../right-sidebar/data';
+import { LOOP_STATE, RANDOM_STATE, VOLUME_STATE } from './localStorage-constanrts';
 
 
 const MediaPlayer = () => {
-    const [currentVolume, setCurrentVolume] = React.useState<number>(80);
+    // set localStorage for media actions button state
+    const localLoopState = Number(localStorage.getItem(LOOP_STATE));
+    if (!localLoopState) {
+      localStorage.setItem(LOOP_STATE, '0');
+    }
+    const localRandomState = localStorage.getItem(RANDOM_STATE);
+    if (!localRandomState) {
+      localStorage.setItem(RANDOM_STATE, 'false');
+    }
+    const localVolumeState = Number(localStorage.getItem(VOLUME_STATE));
+    if (!localVolumeState) {
+      localStorage.setItem(VOLUME_STATE, '80');
+    }
+    // end
+    const [currentVolume, setCurrentVolume] = React.useState<number>(localVolumeState);
     const [isMute, setIsMute] = React.useState<boolean>(false);
-    const [randomState, setRandomState] = React.useState<boolean>(false);
-    const [loopState, setLoopState] = React.useState<number>(0);
+    const [randomState, setRandomState] = React.useState<string>(localRandomState);
+    const [loopState, setLoopState] = React.useState<number>(localLoopState);
     const subMedia = React.useRef<HTMLDivElement>();
     //! start audio controller
     const [timePlaying, setTimePlaying] = React.useState<number>(0);
@@ -31,7 +46,6 @@ const MediaPlayer = () => {
       setTimePlaying(val);
       audioRef.current.currentTime = val;
     };
-
     const isPlay = useSelector<OnPlay, OnPlay['isPlaying']>((state) => state.isPlaying);
     const dispatch = useDispatch();
 
@@ -59,31 +73,63 @@ const MediaPlayer = () => {
       setIsMute(!isMute);
     };
     useEffect(() => {
-      console.log(isMute);
       if (isMute) {
         audioRef.current.volume = 0;
+        subMedia.current.classList.contains('volume-warning') && subMedia.current.classList.remove('volume-warning');
       } else {
         audioRef.current.volume = currentVolume * ((isMute ? 0 : 1) / 100);
+        !subMedia.current.classList.contains('volume-warning') && subMedia.current.classList.add('volume-warning');
       }
-      if (currentVolume > 60) {
-        subMedia.current.classList.add('volume-warning');
-      } else {
-        subMedia.current.classList.remove('volume-warning');
-      }
-    }, [currentVolume, isMute]);
+    }, [isMute]);
     useEffect(() => {
+      localStorage.setItem(VOLUME_STATE, String(currentVolume));
       setIsMute(currentVolume < 0);
-
+      if (currentVolume <= 80) {
+        subMedia.current.classList.contains('volume-warning') && subMedia.current.classList.remove('volume-warning');
+      } else {
+        !subMedia.current.classList.contains('volume-warning') && subMedia.current.classList.add('volume-warning');
+      }
     }, [currentVolume]);
 
     //! end volume
     const setRandom = () => {
-      setRandomState(!randomState);
+      const a = localStorage.getItem(RANDOM_STATE);
+      let x: string;
+      if (a === 'true') {
+        x = 'false';
+        localStorage.setItem(RANDOM_STATE, x);
+      } else if (a === 'false') {
+        x = 'true';
+        localStorage.setItem(RANDOM_STATE, x);
+      }
+      setRandomState(x);
     };
+    //! set loop
     const setLoop = () => {
-      setLoopState((loopState + 1) % 3);
-      console.log(loopState);
+      const loop = Number(localStorage.getItem(LOOP_STATE));
+      setLoopState((loop + 1) % 3);
     };
+    useEffect(() => {
+      localStorage.setItem(LOOP_STATE, loopState.toString());
+      switch (loopState) {
+        case 1: {
+          break;
+        }
+        case 2: {
+          audioRef.current.loop = true;
+          break;
+        }
+        case 0: {
+          audioRef.current.loop = false;
+          break;
+        }
+        default: {
+          audioRef.current.loop = false;
+          break;
+        }
+      }
+    }, [loopState]);
+    //! end set loop
     // set value range
 
     useEffect(() => { // to set total duration of song
@@ -95,9 +141,14 @@ const MediaPlayer = () => {
         const current = audioRef.current.currentTime;
         setTimePlaying(current);
         const dur = Math.floor(audioRef.current.duration);
-        if (Math.floor(current) === dur) {
-          dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: false });
-        }
+        /* if (Math.floor(current) === dur) {
+           dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: false });
+         }*/
+      });
+      audioRef.current.addEventListener('ended', () => {
+        console.log('end roi con dau');
+        audioRef.current.pause();
+        dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: false });
       });
       console.log(subMedia);
     }, [dispatch]);
@@ -105,11 +156,26 @@ const MediaPlayer = () => {
 
     return (
       <div className='media-player-wrapper'>
-        <div className={`d-flex px-4 py-3 align-items-center ${isPlay ? 'spl' : ''}`}>
+        <div className={`media-spacing d-flex align-items-center ${isPlay ? 'spl' : ''}`}>
           <div className='media-info d-flex align-items-center'>
             <div className={`media-thumb ${isPlay ? 'playing' : ''}`}>
               <div className='thumbnail'>
-                <img src={SONG_LIST[0].thumb} alt='' />
+                <div className='thumbnail-effect'>
+                  <img src={SONG_LIST[0].thumb} alt='' />
+                </div>
+                <svg className='note note-1'>
+                  <use xlinkHref='#note-1' />
+                </svg>
+                <svg className='note note-2'>
+                  <use xlinkHref='#note-2' />
+                </svg>
+                <svg className='note note-3'>
+                  <use xlinkHref='#note-3' />
+                </svg>
+                <svg className='note note-4'>
+                  <use xlinkHref='#note-4' />
+                </svg>
+                <svg className='kim'><use xlinkHref='#kim'/></svg>
               </div>
             </div>
             <div className='media-detail-info ms-3'>
@@ -128,9 +194,9 @@ const MediaPlayer = () => {
           <div className='media-controls'>
             <div className='control-group-btn'>
               <div className='icon-btn-group d-flex align-items-center'>
-                <MyTooltip title={`${randomState ? 'Bật' : 'Tắt'} phát ngẫu nhiên`}>
+                <MyTooltip title={`${randomState === 'true' ? 'Bật' : 'Tắt'} phát ngẫu nhiên`}>
                   <IconButton style={{ transform: 'rotate(90deg)' }} onClick={setRandom}>
-                    <svg className={`icon-control ${randomState ? 'icon-control-active' : ''}`} height={22} width={22}>
+                    <svg className={`icon-control ${randomState === 'true' ? 'icon-control-active' : ''}`} height={22} width={22}>
                       <use xlinkHref='#random' />
                     </svg>
                   </IconButton>
@@ -183,21 +249,25 @@ const MediaPlayer = () => {
           </div>
           <div className='media-sub-actions d-flex align-items-center'>
             <MyTooltip title='MV' arrow>
-              <IconButton>
-                <svg className='control-size-huge icon-control'>
-                  <use xlinkHref='#mv' />
-                </svg>
-              </IconButton>
+              <div className='divided-icon-btn'>
+                <IconButton>
+                  <svg className='control-size-huge icon-control'>
+                    <use xlinkHref='#mv' />
+                  </svg>
+                </IconButton>
+              </div>
             </MyTooltip>
             <MyTooltip title='Xem lời bài hát'>
-              <IconButton>
-                <svg className='control-size-huge icon-control'>
-                  <use xlinkHref='#micro' />
-                </svg>
-              </IconButton>
+              <div className='divided-icon-btn'>
+                <IconButton>
+                  <svg className='control-size-huge icon-control'>
+                    <use xlinkHref='#micro' />
+                  </svg>
+                </IconButton>
+              </div>
             </MyTooltip>
-            <div className='d-flex align-items-center'>
-              <IconButton onClick={toggleVolume} className={`${currentVolume > 60 ? 'volume-warning-btn' : ''} `}>
+            <div className='d-flex align-items-center divided-icon-btn' style={{ paddingRight: '20px' }}>
+              <IconButton onClick={toggleVolume} className={`${currentVolume <= 80 || isMute ? '' : 'volume-warning-btn'} `}>
                 {currentVolume * (isMute ? 0 : 1) > 0 ?
                   <VolumeUp style={{ fontSize: '30px' }} /> :
                   <VolumeOff style={{ fontSize: '30px' }} />}

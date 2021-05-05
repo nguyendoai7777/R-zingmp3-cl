@@ -2,6 +2,13 @@ import { SongProfile } from './interface';
 
 export const SONG_LIST: SongProfile[] = [
   {
+    songName: 'Giữa Đại Lộ Đông Tây',
+    songArtist: [
+      { artistName: 'Uyên Linh', profileUrl: 'vn-Uyen-Link', songUrl: '../../../assets/audio/giua-dai-lo-dong-tay.mp3' }
+    ],
+    thumb: 'https://data.chiasenhac.com/data/cover/139/138656.jpg'
+  },
+  {
     songName: 'Tìm Hành Tinh Khác',
     songArtist: [
       { artistName: 'Vũ Cát Tường', profileUrl: 'vn-Vu-Cat-Tuong', songUrl: '../../../assets/audio/nonstop.mp3' }
