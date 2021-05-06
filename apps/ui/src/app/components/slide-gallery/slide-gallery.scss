@@ -3,12 +3,12 @@
     position: relative;
     transform-style: preserve-3d;
     perspective: 1000px;
-    height: 350px;
+    height: 300px;
     margin-bottom: 20px;
     .gallery-data {
       transform: scale(.8);
-      height: 350px;
-      width: 600px;
+      height: 300px;
+      width: 550px;
       position: absolute;
       top: 0;
       transition: .5s;
@@ -24,7 +24,7 @@
         transform: translateX(-50%) scale(1);
       }
       &.item-next {
-        left: calc(100% - 600px);
+        left: calc(100% - 550px);
         transform: scale(.8);
         z-index: 4;
       }
@@ -37,6 +37,48 @@
         left: 50%;
         z-index: 2;
         transform: translateX(-50%) scale(.8);
+      }
+    }
+    .gallery-controller {
+      opacity: 0;
+      &:hover {
+        opacity: 1;
+      }
+      .slide-nav {
+        display: flex;
+        width: 50px;
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+        svg {
+          width: 30px;
+          height: 30px;
+          fill: #ffffff;
+        }
+      }
+      &.controller-btn {
+        padding: 80px 20px;
+        position: absolute;
+        top: 50%;
+        z-index: 5;
+        transition: .25s;
+        .MuiButtonBase-root {
+          cursor: pointer;
+        }
+        &.npd-icon-btn {
+          .MuiIconButton-root {
+            //padding: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+        }
+        &.btn-next {
+          right: calc(5% - 6px);
+          transform: rotate(180deg) translateY(50%);
+        }
+        &.btn-prev {
+          left: calc(5% - 6px);
+          transform: translateY(-50%);
+        }
       }
     }
   }

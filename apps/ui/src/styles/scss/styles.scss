@@ -12,12 +12,13 @@ $bg-primary: #432275;
   --chart-bg-img-alpha: rgba(32, 19, 53, 0.9);
   --text-purple: #c662ef;
   --bg-media-player: #120C1C;
-
+  --text-primary: #fff;
   --purple-primary: #7200a1;
   --blue-neon: #79F1F7;
   --yellow-neon: #E1F703;
   --green-neon: #E1F703;
   --deeppink: #FF1493;
+  --dark-overlay: rgba(0, 0, 0, 0.45);
 }
 * {
   color: white;
@@ -64,6 +65,12 @@ bodY {
     fill: #dcdcdc;
   }
 }
+.group-title {
+  font-size: 18px;
+  font-weight: bolder;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
 .song-actions {
   cursor: default;
   align-items: center;
@@ -89,7 +96,14 @@ bodY {
     }
   }
 }
-
+.media-song-actions {
+  .MuiIconButton-root {
+    padding: 8px;
+  }
+}
+.no-padding {
+  padding: 0 !important;
+}
 @media (min-width: 600px) {
   .MuiTab-root {
     min-width: unset !important;

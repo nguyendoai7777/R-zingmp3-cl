@@ -41,7 +41,8 @@
               "apps/ui/src/styles/css/bootstrap.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js"
+              "node_modules/jquery/dist/jquery.js",
+              "node"
             ],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },

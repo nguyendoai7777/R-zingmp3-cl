@@ -150,7 +150,6 @@ const MediaPlayer = () => {
         audioRef.current.pause();
         dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: false });
       });
-      console.log(subMedia);
     }, [dispatch]);
 
 

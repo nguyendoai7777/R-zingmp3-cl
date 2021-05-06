@@ -1,10 +1,9 @@
 import React from 'react';
 import './sidebar.scss';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SidebarNavItem from './sidebar-nav-item/sidebar-nav-item';
 import { SIDEBAR_DATA, SIDEBAR_DATA_2 } from './constants';
 import { Button } from '@material-ui/core';
-import { getEndPointUrl } from '../../module/module';
 
 
 const Sidebar = () => {
