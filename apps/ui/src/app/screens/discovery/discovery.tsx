@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './discovery.scss';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
@@ -13,15 +13,22 @@ import { ALBUM_LIST } from './data';
 import ReactOwlCarousel from 'react-owl-carousel';
 import { randomKey } from '../../module/module';
 import $ from 'jquery';
+import SelectSong from '../../components/right-sidebar/select-song/select-song';
+import { SONG_LIST } from '../../components/right-sidebar/data';
+import { SongProfile } from '../../components/right-sidebar/interface';
+import MixChoice from './mix-choice/mix-choice';
 
 
 const Discovery = () => {
+  const [rdList, setRdList] = React.useState(SONG_LIST);
+  const [currentIndexSong, setCurrentIndexSong] = useState(null);
+
   const isPlay = useSelector<OnPlay, OnPlay['isPlaying']>((state) => state.isPlaying);
   const dispatch = useDispatch();
-  const options = {
-    item: 3,
-    autoplay: true,
-    loop: true
+  const onChoseSong = (song: SongProfile) => {
+    rdList.forEach(el => {
+      el.isActive = false;
+    });
   };
   return (
     <div className='dc'>
@@ -85,11 +92,11 @@ const Discovery = () => {
             <Link className='album-nav' to={el.nav.url}>{el.nav.title}</Link>
           </div>)}
         </GroupBox>
-        <div className='rl'>
+        <div className='rl mb-3'>
           <GroupBox title='Mới Phát Hành'>
             <ReactOwlCarousel
               navClass={['owl-actions owl-prev', 'owl-actions owl-next']}
-              autoplay={true}
+              autoplay={false}
               loop={true}
               nav={true}
               autoplaySpeed={1000}
@@ -123,6 +130,25 @@ const Discovery = () => {
             </ReactOwlCarousel>
           </GroupBox>
         </div>
+        <div className='rd-list d-flex flex-wrap justify-content-between'>
+          {rdList.map((el, index) => <SelectSong
+            thumb={el.thumb}
+            songName={el.songName}
+            songArtist={el.songArtist}
+            isMain={false}
+            key={Math.random()}
+            isActive={currentIndexSong === index}
+            chooseThisSong={() => {
+              setCurrentIndexSong(index);
+              onChoseSong(el);
+            }}
+          />)}
+        </div>
+        <GroupBox title={'Mix Zing Choice'}>
+          <div className='choice'>
+            <MixChoice />
+          </div>
+        </GroupBox>
       </div>
     </div>
   );

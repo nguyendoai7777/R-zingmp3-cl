@@ -52,7 +52,12 @@ bodY {
     background-color: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #8723a8;
+    background-color: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background-color: #8723a8;
+    }
   }
 }
 .right-sidebar-box {
@@ -104,8 +109,92 @@ bodY {
 .no-padding {
   padding: 0 !important;
 }
+/* -- */
+@mixin text-ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.song-wrap {
+  overflow: hidden;
+  border-radius: 5px;
+  &.rd-item {
+    padding: 0 15px;
+    width: calc(100% / 3 - 21px);
+  }
+  &.playing-song {
+    background-color: #7200A1;
+    &:hover {
+      background-color: #7200A1;
+    }
+    .song-info {
+      .song-actions {
+        background-color: #7200A1;
+      }
+      .song-artist a {
+        color: #e7e7e7;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+  .song-thumb {
+    cursor: pointer;
+    position: relative;
+    .thumb-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.40);
+    }
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  .song-info {
+    position: relative;
+    width: calc(100% - 47px);
+    margin-left: 7px;
+    .song-name {
+      user-select: none;
+      font-weight: bolder;
+      @include text-ellipsis;
+    }
+    .song-artist {
+      user-select: none;
+      font-size: 11px;
+      color: #dcdcdc;
+      @include text-ellipsis;
+      a {
+        color: #764b8c;
+        text-decoration: none;
+        transition: .15s;
+        &:hover {
+          color: var(--text-purple);
+        }
+      }
+    }
+  }
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    .song-thumb {
+    }
+    .song-info .song-actions {
+      left: calc(100% - 80px);
+    }
+  }
+}
+/* -- */
 @media (min-width: 600px) {
   .MuiTab-root {
     min-width: unset !important;
   }
 }
+

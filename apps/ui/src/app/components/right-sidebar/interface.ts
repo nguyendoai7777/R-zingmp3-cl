@@ -5,6 +5,7 @@ export interface SongProfile {
   songArtist: ArtistInformation[];
   index?: number;
   isActive?: boolean;
+  isMain?: boolean;
 }
 
 export interface ArtistInformation {

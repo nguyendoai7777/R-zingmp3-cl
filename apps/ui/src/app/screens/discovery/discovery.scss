@@ -47,7 +47,7 @@
 }
 .album-group {
   width: calc(100% / 7);
-  padding: 0 20px;
+  padding: 0 13px;
   .album-thumb {
     position: relative;
     cursor: pointer;
@@ -189,4 +189,8 @@
       fill: #fff;
     }
   }
+}
+.choice {
+  width: 100%;
+  padding: 0 13px;
 }

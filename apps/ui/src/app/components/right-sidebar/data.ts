@@ -52,6 +52,13 @@ export const SONG_LIST: SongProfile[] = [
     thumb: 'https://photo-resize-zmp3.zadn.vn/w94_r1x1_jpeg/cover/5/8/3/5/5835af4303332eb85a6a8eec6160ad63.jpg'
   },
   {
+    songName: 'Just Be A Friend',
+    songArtist: [
+      { artistName: 'Gold 24K', profileUrl: 'us-gold-24k' }
+    ],
+    thumb: 'https://photo-resize-zmp3.zadn.vn/w94_r1x1_jpeg/cover/5/8/3/5/5835af4303332eb85a6a8eec6160ad63.jpg'
+  },
+  {
     songName: 'Electricity',
     songArtist: [
       {

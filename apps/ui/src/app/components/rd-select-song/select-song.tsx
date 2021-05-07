@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FavoriteBorder, MoreHoriz, PlayArrow } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
-import { SongProfile } from '../interface';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { SongProfile } from '../right-sidebar/interface';
 
 
-const SelectSong: React.FC<SongProfile> = ({ chooseThisSong, songName, songArtist, thumb, isActive, isMain = true }) => {
-
-
+const RandomSelectSong: React.FC<SongProfile> = ({ chooseThisSong, songName, songArtist, thumb, isActive }) => {
   return (
-    <div className={`song-wrap p-2 d-flex ${isActive ? 'playing-song' : ''} ${isMain ? '' : 'rd-item'}`}>
+    <div className={`song-wrap p-2 d-flex ${isActive ? 'playing-song' : ''}`}>
       <div className='song-thumb' onClick={chooseThisSong}>
         <div className='thumb-overlay'>
           <PlayArrow />
@@ -27,9 +25,9 @@ const SelectSong: React.FC<SongProfile> = ({ chooseThisSong, songName, songArtis
         </div>
         <div className='song-actions'>
           <IconButton className='small-action'>
-            {isMain ? <FavoriteBorder fontSize={'small'} /> : <svg width='20' height='20' fill='#fff'>
+            <svg>
               <use xlinkHref='#micro' />
-            </svg>}
+            </svg>
           </IconButton>
           <IconButton className='small-action'>
             <MoreHoriz fontSize={'small'} />
@@ -40,4 +38,4 @@ const SelectSong: React.FC<SongProfile> = ({ chooseThisSong, songName, songArtis
   );
 };
 
-export default SelectSong;
+export default RandomSelectSong;
