@@ -3,9 +3,9 @@
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
   .thumbnail {
-    width: 170px;
-    min-width: 170px;
-    height: 170px;
+    width: 200px;
+    min-width: 200px;
+    height: 200px;
     border-radius: 8px;
     overflow: hidden;
     img {
@@ -70,6 +70,9 @@
       font-weight: bolder;
       color: #b8b8b8;
       transition: .3s;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
     .stt {
       width: 30px;
@@ -106,6 +109,13 @@
       width: 20px;
       height: 20px;
       fill: #fff;
+    }
+  }
+}
+@media screen and (max-width: 1253px) {
+  .dc .dc-body .group-box .choice .choice-wrapper {
+    .info {
+      display: none !important;
     }
   }
 }

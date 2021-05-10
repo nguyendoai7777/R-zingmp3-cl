@@ -12,11 +12,13 @@ import { OnPlay } from '../../../interfaces/action.interface';
 import { ALBUM_LIST } from './data';
 import ReactOwlCarousel from 'react-owl-carousel';
 import { randomKey } from '../../module/module';
-import $ from 'jquery';
 import SelectSong from '../../components/right-sidebar/select-song/select-song';
 import { SONG_LIST } from '../../components/right-sidebar/data';
 import { SongProfile } from '../../components/right-sidebar/interface';
 import MixChoice from './mix-choice/mix-choice';
+
+const url = '../../../assets/audio/giua-dai-lo-dong-tay.mp3';
+const mp3 = new Audio(url);
 
 
 const Discovery = () => {
@@ -30,6 +32,12 @@ const Discovery = () => {
       el.isActive = false;
     });
   };
+/*  useEffect(() => {
+    if (mp3) {
+      mp3.play();
+      mp3.volume = 1;
+    }
+  }, []);*/
   return (
     <div className='dc'>
       <SlideGallery />

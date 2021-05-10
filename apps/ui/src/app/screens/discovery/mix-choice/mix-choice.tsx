@@ -19,7 +19,7 @@ const ChoiceItem: React.FC<ChoiceSong> = ({ name, index }) => {
         </IconButton>
       </div>
       <div className='ps-2 choice-text'>{name}</div>
-      <div className='ms-auto choice-control small-icon'>
+      <div className='ms-auto choice-control small-icon no-wrap'>
         <MyTooltip title='Phát cùng lời bài hát' arrow placement='top'>
           <IconButton className=''>
             <svg className='choice-icon'>

@@ -146,13 +146,37 @@ const MediaPlayer = () => {
          }*/
       });
       audioRef.current.addEventListener('ended', () => {
-        console.log('end roi con dau');
         audioRef.current.pause();
         dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: false });
       });
     }, [dispatch]);
 
-
+    const nameWrapper = React.useRef(null);
+    const nameTarget = React.useRef(null);
+    const [parentWidth, setParentWidth] = React.useState<number>(null);
+    const [targetWidth, setTargetWidth] = React.useState<number>(null);
+    useEffect(() => {
+      const wp: HTMLDivElement = nameWrapper.current;
+      const wt: HTMLDivElement = nameTarget.current;
+      if (wp.offsetWidth && wt.scrollWidth) {
+        setParentWidth(wp.offsetWidth);
+        setTargetWidth(wt.scrollWidth);
+      }
+      if (wt.scrollWidth > wp.offsetWidth) {
+        setInterval(() => {
+          const co = wt.classList.contains('automation-text');
+          if (!co) {
+            wt.classList.add('automation-text');
+          }
+        }, 5000);
+        setInterval(() => {
+          const co = wt.classList.contains('automation-text');
+          if (co) {
+            wt.classList.remove('automation-text');
+          }
+        }, 20000);
+      }
+    }, []);
     return (
       <div className='media-player-wrapper'>
         <div className={`media-spacing d-flex align-items-center ${isPlay ? 'spl' : ''}`}>
@@ -174,11 +198,23 @@ const MediaPlayer = () => {
                 <svg className='note note-4'>
                   <use xlinkHref='#note-4' />
                 </svg>
-                <svg className='kim'><use xlinkHref='#kim'/></svg>
+                <svg className='kim'>
+                  <use xlinkHref='#kim' />
+                </svg>
               </div>
             </div>
             <div className='media-detail-info ms-3'>
-              <div className='song-name'>{SONG_LIST[0].songName}</div>
+              <div className='song-name-control d-flex' ref={nameWrapper}>
+                {
+                  parentWidth < targetWidth ?
+                    <div className='song-name no-wrap' ref={nameTarget}>
+                      {SONG_LIST[0].songName} &nbsp;&nbsp;&nbsp;&nbsp; {SONG_LIST[0].songName}
+                    </div> :
+                    <div className='song-name no-wrap' ref={nameTarget}>
+                      {SONG_LIST[0].songName}
+                    </div>
+                }
+              </div>
               <div className='song-artist'>{SONG_LIST[0].songArtist[0].artistName}</div>
             </div>
             <div className='media-song-actions ms-2'>
@@ -238,9 +274,7 @@ const MediaPlayer = () => {
                     max={Math.floor(audioTimerDuration)}
                     aria-labelledby='continuous-slider'
                   />
-                  <audio controls id='app-audio' ref={audioRef} style={{ display: 'none' }}>
-                    <source src={SONG_LIST[0].songArtist[0].songUrl} />
-                  </audio>
+                  <audio controls id='app-audio' ref={audioRef} style={{ display: 'none' }} src={SONG_LIST[0].songArtist[0].songUrl} />
                 </div>
                 <div className='played-time ps-3'>{audioDuration(audioTimerDuration)}</div>
               </div>

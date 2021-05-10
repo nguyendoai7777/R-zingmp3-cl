@@ -113,15 +113,30 @@ $warning: #ff5200;
     }
   }
   .media-detail-info {
-    .song-name {
-      font-weight: bolder;
-      font-size: 16px;
+    .song-name-control {
+      min-width: 163px;
+      max-width: 163px;
+      overflow: hidden;
+      .song-name {
+        width: fit-content;
+        font-weight: bolder;
+        font-size: 16px;
+      }
+      .automation-text {
+        animation-name: auto-text;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-duration: 20s;
+        text-overflow: clip;
+        &:hover {
+          animation-play-state: paused;
+        }
+      }
     }
     .song-artist {
       font-size: 13px;
     }
   }
-
   .media-controls {
     justify-content: center;
     flex: 1 1 auto;
@@ -253,5 +268,10 @@ $warning: #ff5200;
       visibility: visible;
       opacity: 1;
     }
+  }
+}
+@keyframes auto-text {
+  to {
+    transform: translateX(-100%);
   }
 }

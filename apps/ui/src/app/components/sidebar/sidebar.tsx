@@ -25,7 +25,13 @@ const Sidebar = () => {
         </div>
         <div className='divide' />
         <div className='side-more app-scroll'>
-          {SIDEBAR_DATA_2.map(e => <SidebarNavItem iconName={e.iconName} textContent={e.textContent} url={e.url} key={e.id} />)}
+          {SIDEBAR_DATA_2.map(e =>
+            <SidebarNavItem
+              iconName={e.iconName}
+              textContent={e.textContent}
+              url={e.url}
+              key={e.id} />
+          )}
           <div className='to-login p-3 large-side mb-4'>
             <p>Đăng nhập để khám phá những playlist dành riêng cho chính bạn.</p>
             <Button className='lg-btn'>Đăng nhập</Button>
