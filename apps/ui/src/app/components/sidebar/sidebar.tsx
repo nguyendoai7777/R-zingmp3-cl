@@ -3,7 +3,8 @@ import './sidebar.scss';
 import { Link } from 'react-router-dom';
 import SidebarNavItem from './sidebar-nav-item/sidebar-nav-item';
 import { SIDEBAR_DATA, SIDEBAR_DATA_2 } from './constants';
-import { Button } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
+import { ArrowForward } from '@material-ui/icons';
 
 
 const Sidebar = () => {
@@ -36,6 +37,9 @@ const Sidebar = () => {
             <p>Đăng nhập để khám phá những playlist dành riêng cho chính bạn.</p>
             <Button className='lg-btn'>Đăng nhập</Button>
           </div>
+          <Button className='expand-side-btn'>
+            <ArrowForward  />
+          </Button>
         </div>
 
       </div>
