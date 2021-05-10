@@ -1,9 +1,9 @@
 .right-sidebar {
   background-color: #170F23;
   border-left: 1px solid #b6b6b62e;
+  position: relative;
   transition: width .5s;
   width: 320px;
-  position: relative;
   .side-wrapper {
     width: 100%;
     height: 100vh;
@@ -41,12 +41,9 @@
                 }
               }
             }
-            .PrivateTabIndicator-root-1 {
+            .MuiTabs-indicator {
+              border-radius: 100px;
               height: 28px;
-              border-radius: 100px;
-            }
-            .PrivateTabIndicator-root-1 {
-              border-radius: 100px;
               background-color: rgba(255, 255, 255, 0.15);
             }
           }
@@ -106,16 +103,32 @@
     }
   }
   .expand-btn {
+    position: absolute;
+    background-color: #9300de9c;
+    border-radius: 50%;
+    top: 50%;
+    right: 100%;
     opacity: 0;
     visibility: hidden;
-    position: absolute;
-    right: 100%;
-    top: 46%;
     transition: .5s;
-    transform: translate(50px, -50%);
-    background: rgb(97 0 185 / 55%);
-    border-radius: 50%;
+    transform: translate(-50px, -50%);
   }
+}
+.rsb-expand {
+  transition: width .5s ease-out;
+  width: 320px !important;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+.wx {
+  transition: width .5s ease-out;
+  width: 0 !important;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10;
 }
 @keyframes rotate {
   0% {
@@ -125,3 +138,4 @@
     transform: rotate(360deg);
   }
 }
+

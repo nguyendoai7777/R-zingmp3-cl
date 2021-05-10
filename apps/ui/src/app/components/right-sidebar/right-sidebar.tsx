@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import './right-sidebar.scss';
-import { Tabs, Tab, IconButton, Switch } from '@material-ui/core';
-import { AccessAlarm, ArrowBack, MoreHoriz } from '@material-ui/icons';
-import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { purple } from '@material-ui/core/colors';
+import { IconButton, Switch, Tab, Tabs } from '@material-ui/core';
+import { AccessAlarm, ArrowBack, ArrowForward, MoreHoriz } from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
 import { SONG_LIST } from './data';
 import TabPanel from './tabpanel';
 import SelectSong from './select-song/select-song';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SongProfile } from './interface';
 
 
@@ -38,10 +37,12 @@ const RightSidebar = () => {
   const handleTabsChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabsValue(newValue);
   };
-  const [currentIndexSong, setCurrentIndexSong] = useState(null);
-  const [playingList, setPlayingList] = useState([]);
-  const [playListSuggest, setPlayListSuggest] = useState(SONG_LIST);
-  const [autoPlay, setAutoPlay] = useState(true);
+  const [currentIndexSong, setCurrentIndexSong] = React.useState(null);
+  const [playingList, setPlayingList] = React.useState([]);
+  const [playListSuggest, setPlayListSuggest] = React.useState(SONG_LIST);
+  const [autoPlay, setAutoPlay] = React.useState(true);
+  const [wsb, setWsb] = React.useState(null);
+  const [toggleExpand, setToggleExpand] = React.useState(false);
   const onChoseSong = (song: SongProfile) => {
     setPlayingList([...playingList, song]);
     const newList = playListSuggest.filter(a => a.songName !== song.songName);
@@ -52,6 +53,39 @@ const RightSidebar = () => {
   };
   const detectAutoPlayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAutoPlay(!autoPlay);
+  };
+  useEffect(() => {
+    const sb = document.querySelector('.right-sidebar');
+    setWsb(sb);
+    if (wsb) {
+      const wcl = wsb.classList;
+      if (toggleExpand) {
+        wcl.add('rsb-expand');
+        wcl.remove('wx')
+
+      } else {
+        wcl.remove('rsb-expand');
+        wcl.add('wx')
+      }
+    }
+
+    window.onresize = () => {
+      const w = window.innerWidth;
+      if (w > 1432 && wsb) {
+        setToggleExpand(false)
+        wsb.classList.remove('rsb-expand');
+        wsb.classList.remove('wx');
+      }
+    };
+  }, [toggleExpand]);
+  const expandBar = () => {
+    setToggleExpand(!toggleExpand);
+    const cond = wsb.classList.contains('rsb-expand');
+    if (!cond) {
+      wsb.classList.remove('rsb-expand');
+    }
+
+    // console.log('log log: ', wsb);
   };
   return (
     <div className='right-sidebar pt-2'>
@@ -150,8 +184,8 @@ const RightSidebar = () => {
         </TabPanel>
       </div>
       <div className='expand-btn'>
-        <IconButton>
-          <ArrowBack />
+        <IconButton onClick={expandBar}>
+          {!toggleExpand ? <ArrowBack /> : <ArrowForward />}
         </IconButton>
       </div>
     </div>
