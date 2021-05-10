@@ -8,6 +8,7 @@ import TabPanel from './tabpanel';
 import SelectSong from './select-song/select-song';
 import { Link } from 'react-router-dom';
 import { SongProfile } from './interface';
+import MyTooltip from '../tooltip/tooltip';
 
 
 function a11yProps(index: number) {
@@ -61,18 +62,18 @@ const RightSidebar = () => {
       const wcl = wsb.classList;
       if (toggleExpand) {
         wcl.add('rsb-expand');
-        wcl.remove('wx')
+        wcl.remove('wx');
 
       } else {
         wcl.remove('rsb-expand');
-        wcl.add('wx')
+        wcl.add('wx');
       }
     }
 
     window.onresize = () => {
       const w = window.innerWidth;
       if (w > 1432 && wsb) {
-        setToggleExpand(false)
+        setToggleExpand(false);
         wsb.classList.remove('rsb-expand');
         wsb.classList.remove('wx');
       }
@@ -183,11 +184,17 @@ const RightSidebar = () => {
           Item Two
         </TabPanel>
       </div>
-      <div className='expand-btn'>
-        <IconButton onClick={expandBar}>
-          {!toggleExpand ? <ArrowBack /> : <ArrowForward />}
-        </IconButton>
-      </div>
+      <MyTooltip
+        title={`${!toggleExpand ? 'Mở ' : 'Đóng'} bảng điều khiển`}
+        arrow
+        placement={!toggleExpand ? 'left' : 'top'}
+      >
+        <div className='expand-btn'>
+          <IconButton onClick={expandBar}>
+            {!toggleExpand ? <ArrowBack /> : <ArrowForward />}
+          </IconButton>
+        </div>
+      </MyTooltip>
     </div>
   );
 };
