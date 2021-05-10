@@ -16,7 +16,7 @@ const Sidebar = () => {
               <use xlinkHref='#logo' />
             </svg>
             <svg className='short-side'>
-              <use xlinkHref='#short-logo'/>
+              <use xlinkHref='#short-logo' />
             </svg>
           </div>
         </Link>
@@ -24,13 +24,14 @@ const Sidebar = () => {
           {SIDEBAR_DATA.map(e => <SidebarNavItem iconName={e.iconName} textContent={e.textContent} url={e.url} key={e.id} />)}
         </div>
         <div className='divide' />
-        <div>
+        <div className='side-more app-scroll'>
           {SIDEBAR_DATA_2.map(e => <SidebarNavItem iconName={e.iconName} textContent={e.textContent} url={e.url} key={e.id} />)}
+          <div className='to-login p-3 large-side mb-4'>
+            <p>Đăng nhập để khám phá những playlist dành riêng cho chính bạn.</p>
+            <Button className='lg-btn'>Đăng nhập</Button>
+          </div>
         </div>
-        <div className='to-login p-3 large-side'>
-          <p>Đăng nhập để khám phá những playlist dành riêng cho chính bạn.</p>
-          <Button className='lg-btn'>Đăng nhập</Button>
-        </div>
+
       </div>
     </div>
   );
