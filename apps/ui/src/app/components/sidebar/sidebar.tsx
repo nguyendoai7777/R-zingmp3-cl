@@ -12,19 +12,22 @@ const Sidebar = () => {
       <div className='sidebar-cover'>
         <Link to='/'>
           <div className='side-logo'>
-            <svg>
+            <svg className='large-side'>
               <use xlinkHref='#logo' />
+            </svg>
+            <svg className='short-side'>
+              <use xlinkHref='#short-logo'/>
             </svg>
           </div>
         </Link>
         <div>
-          {SIDEBAR_DATA.map(e => <SidebarNavItem  textContent={e.textContent} url={e.url} key={e.id} />)}
+          {SIDEBAR_DATA.map(e => <SidebarNavItem iconName={e.iconName} textContent={e.textContent} url={e.url} key={e.id} />)}
         </div>
         <div className='divide' />
         <div>
-          {SIDEBAR_DATA_2.map(e => <SidebarNavItem  textContent={e.textContent} url={e.url} key={e.id} />)}
+          {SIDEBAR_DATA_2.map(e => <SidebarNavItem iconName={e.iconName} textContent={e.textContent} url={e.url} key={e.id} />)}
         </div>
-        <div className='to-login p-3'>
+        <div className='to-login p-3 large-side'>
           <p>Đăng nhập để khám phá những playlist dành riêng cho chính bạn.</p>
           <Button className='lg-btn'>Đăng nhập</Button>
         </div>

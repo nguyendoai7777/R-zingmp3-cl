@@ -223,7 +223,7 @@ const MediaPlayer = () => {
                 </MyTooltip>
                 <MyTooltip title={loopState === 0 ? 'Không lặp lại' : loopState === 1 ? 'Lặp lại toàn bộ' : 'Lặp lại 1 bài'} arrow>
                   <IconButton onClick={setLoop}>
-                    <svg className='control-size icon-control'>
+                    <svg className={`control-size icon-control ${loopState === 0 ? '' : 'loop-active'}`}>
                       <use xlinkHref={loopState === 0 ? '#loop' : loopState === 1 ? '#loop-active' : '#loop-1'} />
                     </svg>
                   </IconButton>

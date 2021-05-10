@@ -1,9 +1,11 @@
 .gallery-wrapper {
   .gallery-images {
+    height: calc(23vw - 131px);
+    display: flex;
+    align-items: center;
     position: relative;
     transform-style: preserve-3d;
     perspective: 1000px;
-    height: 300px;
     margin-bottom: 20px;
     .gallery-data {
       transform: scale(.8);
@@ -84,56 +86,21 @@
   }
   .gallery-dots {}
 }
-/*
- //position: relative;
-    .gallery-controller {
-      .slide-nav {
-        cursor: pointer;
-        padding: 18px;
-        border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.1);
-        svg {
-          width: 40px;
-          height: 40px;
-          fill: white;
-          transition: .2s;
+@media screen and (max-width: 1919px) {
+  .gallery-wrapper {
+    .gallery-images {
+      .gallery-data {
+        &.item-selected,
+        &.item-next,
+        &.item-prev,
+        &.item-hidden {
+          width: 42.08%;
+          height: auto;
+        }
+        &.item-next {
+          left: calc(100% - 42.08%);
         }
       }
-      &.controller-btn {
-        position: absolute;
-        top: 0;
-        &:hover {
-          svg {
-            transform: translateX(-18px);
-          }
-          &:after {
-            width: 52px;
-          }
-        }
-        &:after {
-          right: 10px;
-          position: absolute;
-          top: 50%;
-          transition: .2s;
-          transform: translateY(-50%);
-          content: "";
-          display: block;
-          width: 0;
-          height: 0;
-          border-top: 2px solid #fff;
-        }
-      }
-      &.npd-icon-btn {
-        .MuiIconButton-root {
-          padding: 0;
-        }
-      }
-    }
-    .btn-prev {
-      left: 0;
-    }
-    .btn-next {
-      right: 0;
     }
   }
-*/
+}

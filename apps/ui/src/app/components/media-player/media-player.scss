@@ -9,6 +9,9 @@ $warning: #ff5200;
   .spl {
     animation: is-playing-detected 10s infinite linear;
   }
+  .loop-active {
+    fill: var(--purple-primary) !important;
+  }
   .media-spacing {
     padding: 10px 35px;
   }

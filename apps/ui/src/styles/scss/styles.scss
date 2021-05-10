@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 $bg-primary: #432275;
+@import "./responsive";
 [app-theme="mp3"] {
   --bg-purple-primary: #432275;
   --bg-purple-primary-dark: #231B2E;

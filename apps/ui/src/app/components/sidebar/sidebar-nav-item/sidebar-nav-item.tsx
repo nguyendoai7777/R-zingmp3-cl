@@ -4,13 +4,16 @@ import { NavItem } from '../constants';
 import { Button } from '@material-ui/core';
 import './sidebar-nav-item.scss';
 
-const SidebarNavItem: React.FC<NavItem> = ({ textContent, url }) => {
+const SidebarNavItem: React.FC<NavItem> = ({ iconName, textContent, url }) => {
 
   return (
-    <div className='nav'>
+    <div className='nav-wrapper'>
       <NavLink to={url} exact activeClassName='activated-route'>
-        <Button className={`nav-item`}>
-          {textContent}
+        <Button className={`nav-item `}>
+          <svg className='nav-icon'>
+            <use xlinkHref={'#' + iconName} />
+          </svg>
+          <span className='large-side'>{textContent}</span>
         </Button>
       </NavLink>
     </div>

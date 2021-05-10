@@ -6,6 +6,10 @@
   .sidebar-cover {
     width: 240px;
     height: 100%;
+    transition: width .3s ease-out;
+    .short-side {
+      display: none;
+    }
   }
   .side-logo {
     padding: 15px 0 20px 25px;

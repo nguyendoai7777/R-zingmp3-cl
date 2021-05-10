@@ -6,6 +6,24 @@ export interface Album {
   }
 }
 
+export interface ChoiceSong {
+  name: string;
+  index?: number;
+}
+
+export const CHOICE_LIST = [
+  { name: 'Anh Không Đòi Quà' },
+  { name: 'Anh Không Đòi Quà' },
+  { name: 'Anh Không Đòi Quà' },
+  { name: 'Anh Không Đòi Quà' },
+  { name: 'Anh Không Đòi Quà' },
+  { name: 'Anh Không Đòi Quà' },
+  { name: 'Anh Không Đòi Quà' },
+  { name: 'Anh Không Đòi Quà' },
+  { name: 'Anh Không Đòi Quà' },
+  { name: 'Anh Không Đòi Quà' },
+  { name: 'Anh Không Đòi Quà' }
+];
 export const ALBUM_LIST: Album[] = [
   {
     nav: {

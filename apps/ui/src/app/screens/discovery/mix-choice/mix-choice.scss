@@ -4,6 +4,7 @@
   background: rgba(255, 255, 255, 0.1);
   .thumbnail {
     width: 170px;
+    min-width: 170px;
     height: 170px;
     border-radius: 8px;
     overflow: hidden;
@@ -16,6 +17,7 @@
     padding: 0 15px;
     border-right: 1px solid #ffffff26;
     max-width: 270px;
+    min-width: 270px;
     .choice-title {
       font-weight: 700;
       font-size: 18px;
@@ -34,6 +36,76 @@
     p, i {
       font-size: 14px;
       color: #dcdcdc66;
+    }
+  }
+  .choice-item {
+    cursor: default;
+    padding: 5px 10px;
+    width: 50%;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    transition: .3s;
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      .choice-control {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .stt {
+        p {
+          transform: translateX(-100%);
+        }
+        .ControlAction {
+          transform: translateX(-24px);
+        }
+      }
+      .choice-text {
+        color: white;
+      }
+    }
+    .choice-text {
+      font-size: 12px;
+      font-weight: bolder;
+      color: #b8b8b8;
+      transition: .3s;
+    }
+    .stt {
+      width: 30px;
+      overflow: hidden;
+      p {
+        display: block;
+        width: 24px;
+        max-width: 24px;
+        min-width: 24px;
+        margin: 0;
+        transition: .3s;
+      }
+      .ControlAction {
+        transition: .3s;
+        transform: translateX(100%);
+      }
+    }
+    .choice-control {
+      transition: .3s;
+      opacity: 1;
+      transform: translateX(calc(100% + 5px));
+      .choice-icon {
+        width: 20px;
+        height: 20px;
+        fill: #fff;
+      }
+    }
+  }
+}
+.small-icon {
+  .MuiIconButton-root {
+    padding: 5px;
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
     }
   }
 }

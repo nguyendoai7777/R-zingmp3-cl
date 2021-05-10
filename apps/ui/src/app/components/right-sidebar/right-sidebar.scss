@@ -1,9 +1,12 @@
 .right-sidebar {
   background-color: #170F23;
   border-left: 1px solid #b6b6b62e;
+  transition: width .5s;
+  width: 320px;
+  position: relative;
   .side-wrapper {
+    width: 100%;
     height: 100vh;
-    width: 320px;
     [role="tabpanel"] {
       height: 100%;
       .MuiBox-root {
@@ -101,6 +104,17 @@
         }
       }
     }
+  }
+  .expand-btn {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: 100%;
+    top: 46%;
+    transition: .5s;
+    transform: translate(50px, -50%);
+    background: rgb(97 0 185 / 55%);
+    border-radius: 50%;
   }
 }
 @keyframes rotate {

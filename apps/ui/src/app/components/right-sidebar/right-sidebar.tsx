@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './right-sidebar.scss';
 import { Tabs, Tab, IconButton, Switch } from '@material-ui/core';
-import { AccessAlarm, MoreHoriz } from '@material-ui/icons';
+import { AccessAlarm, ArrowBack, MoreHoriz } from '@material-ui/icons';
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 import { SONG_LIST } from './data';
@@ -148,6 +148,11 @@ const RightSidebar = () => {
         <TabPanel value={tabsValue} index={1}>
           Item Two
         </TabPanel>
+      </div>
+      <div className='expand-btn'>
+        <IconButton>
+          <ArrowBack />
+        </IconButton>
       </div>
     </div>
   );

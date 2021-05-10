@@ -1,8 +1,41 @@
 import React from 'react';
 import './mix-choice.scss';
 import { Link } from 'react-router-dom';
+import { Icon, IconButton } from '@material-ui/core';
+import { MoreHoriz, PlayArrow } from '@material-ui/icons';
+import { CHOICE_LIST, ChoiceSong } from '../data';
+import MyTooltip from '../../../components/tooltip/tooltip';
+import { randomKey } from '../../../module/module';
 
-
+const ChoiceItem: React.FC<ChoiceSong> = ({ name, index }) => {
+  return (
+    <div className='choice-item'>
+      <div className='stt small-icon d-flex align-items-center'>
+        <p className=' choice-text'>{index}.</p>
+        <IconButton className='ControlAction'>
+          <svg>
+            <use xlinkHref='#play' />
+          </svg>
+        </IconButton>
+      </div>
+      <div className='ps-2 choice-text'>{name}</div>
+      <div className='ms-auto choice-control small-icon'>
+        <MyTooltip title='Phát cùng lời bài hát' arrow placement='top'>
+          <IconButton className=''>
+            <svg className='choice-icon'>
+              <use xlinkHref='#micro' />
+            </svg>
+          </IconButton>
+        </MyTooltip>
+        <MyTooltip title='Khác' arrow placement='top'>
+          <IconButton className=''>
+            <MoreHoriz fontSize={'small'} />
+          </IconButton>
+        </MyTooltip>
+      </div>
+    </div>
+  );
+};
 
 const MixChoice = () => {
   return (
@@ -19,9 +52,9 @@ const MixChoice = () => {
         </div>
         <i>hơn 30 bài</i>
       </div>
-      <div className='flex-grow-1'>
-        <div className='d-flex flex-wrap px-2'>
-
+      <div className=''>
+        <div className='d-flex flex-wrap ps-2'>
+          {CHOICE_LIST.map((el, i) => <ChoiceItem key={randomKey()} name={el.name} index={i + 1} />)}
         </div>
       </div>
     </div>
