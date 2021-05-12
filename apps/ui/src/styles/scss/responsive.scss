@@ -21,24 +21,14 @@
     .main {
       width: calc(100% - 80px);
     }
-    .sidebar .sidebar-cover {
-      transition: width .3s ease-out;
-      width: 80px !important;
-      .side-logo {
-        padding-left: 0;
-        padding-right: 0;
-        display: flex;
-        justify-content: center;
-      }
-      .large-side {
-        display: none;
-      }
-      .short-side {
-        display: block !important;
-      }
-    }
     .dc .gallery-wrapper .gallery-images {
       height: calc(28vw - 83px) !important;
     }
+    .expand-side-btn {
+      display: block;
+    }
+  }
+  .to-login {
+    display: none;
   }
 }

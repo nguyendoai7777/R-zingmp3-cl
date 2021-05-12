@@ -69,7 +69,6 @@ const RightSidebar = () => {
         wcl.add('wx');
       }
     }
-
     window.onresize = () => {
       const w = window.innerWidth;
       if (w > 1432 && wsb) {

@@ -132,9 +132,20 @@ $warning: #ff5200;
           animation-play-state: paused;
         }
       }
+      &.end-overlay {
+        -webkit-mask-image: linear-gradient(to left, transparent .2%, #000 20%);
+      }
     }
     .song-artist {
       font-size: 13px;
+      a {
+        text-decoration: none;
+        color: white;
+        font-size: 12px;
+      }
+      &:hover a {
+        color: var(--text-purple);
+      }
     }
   }
   .media-controls {

@@ -3,6 +3,9 @@
   display: flex;
   align-items: center;
   transition: .25s;
+  .MuiButton-label {
+    white-space: nowrap;
+  }
   a {
     display: block;
     width: 100%;

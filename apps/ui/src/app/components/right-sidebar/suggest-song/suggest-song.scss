@@ -58,12 +58,14 @@
       @include text-ellipsis;
       a {
         color: #764b8c;
+        cursor: pointer;
         text-decoration: none;
         transition: .15s;
         &:hover {
           color: var(--text-purple);
         }
       }
+
     }
 
   }

@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { OnPlay } from '../../../interfaces/action.interface';
 import { SONG_LIST } from '../right-sidebar/data';
 import { LOOP_STATE, RANDOM_STATE, VOLUME_STATE } from './localStorage-constanrts';
-
+import { Link } from 'react-router-dom';
+import RedirectLink from '../redirect/redirect';
 
 const MediaPlayer = () => {
     // set localStorage for media actions button state
@@ -204,7 +205,9 @@ const MediaPlayer = () => {
               </div>
             </div>
             <div className='media-detail-info ms-3'>
-              <div className='song-name-control d-flex' ref={nameWrapper}>
+              <div className={`song-name-control d-flex ${parentWidth < targetWidth ? 'end-overlay' : ''}`}
+                   ref={nameWrapper}
+              >
                 {
                   parentWidth < targetWidth ?
                     <div className='song-name no-wrap' ref={nameTarget}>
@@ -215,7 +218,9 @@ const MediaPlayer = () => {
                     </div>
                 }
               </div>
-              <div className='song-artist'>{SONG_LIST[0].songArtist[0].artistName}</div>
+              <div className='song-artist'>
+                <RedirectLink pathName={SONG_LIST[0].songArtist[0].artistName} contentName={SONG_LIST[0].songArtist[0].artistName} />
+              </div>
             </div>
             <div className='media-song-actions ms-2'>
               <IconButton className='small-action'>

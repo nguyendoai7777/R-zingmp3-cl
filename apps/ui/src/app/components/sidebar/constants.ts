@@ -1,4 +1,4 @@
-
+import { ROUTES_PATH } from '../../../constants/routes-path';
 
 export interface NavItem {
   url: string;
@@ -6,11 +6,12 @@ export interface NavItem {
   textContent: string;
   currentRoute?: string;
   iconName: string;
+  onClick?: () => any;
 }
 
 export const SIDEBAR_DATA: NavItem[] = [
   {
-    url: '/person/all',
+    url: ROUTES_PATH.person,
     textContent: 'Cá Nhân',
     id: Math.floor(Math.random() * 10000000),
     iconName: 'ca-nhan'
@@ -22,13 +23,13 @@ export const SIDEBAR_DATA: NavItem[] = [
     iconName: 'kham-pha'
   },
   {
-    url: '/zing-charts',
+    url: ROUTES_PATH.zing_charts,
     textContent: '#zingchart',
     id: Math.floor(Math.random() * 10000000),
     iconName: 'zing-chart'
   },
   {
-    url: '/follow',
+    url: ROUTES_PATH.follow,
     textContent: 'Theo Dõi',
     id: Math.floor(Math.random() * 10000000),
     iconName: 'theo-doi'
@@ -37,28 +38,28 @@ export const SIDEBAR_DATA: NavItem[] = [
 
 export const SIDEBAR_DATA_2: NavItem[] = [
   {
-    url: '/new-release',
+    url: ROUTES_PATH.new_release,
     textContent: 'Mới Phát Hành',
     id: Math.floor(Math.random() * 10000000),
     iconName: 'nhac-moi'
   },
   {
-    url: '/category',
+    url: ROUTES_PATH.category,
     textContent: 'Thể Loại',
     id: Math.floor(Math.random() * 10000000),
     iconName: 'the-loai'
   },
   {
-    url: '/top-100',
+    url: ROUTES_PATH.top_100,
     textContent: 'Top 100',
     id: Math.floor(Math.random() * 10000000),
     iconName: 'top-100'
   },
   {
-    url: '/mv',
+    url: ROUTES_PATH.mv,
     textContent: 'MV',
     id: Math.floor(Math.random() * 10000000),
-    iconName: 'mv'
+    iconName: 'mvv'
   }
 ];
 

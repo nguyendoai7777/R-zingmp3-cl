@@ -1,9 +1,5 @@
-import React, { useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './app.scss';
 import Sidebar from './components/sidebar/sidebar';
 import Personal from './screens/personal/personal';
@@ -17,11 +13,11 @@ import Top100 from './screens/top-100/top-100';
 import NotFound from './screens/not-found/not-found';
 import Navbar from './components/navbar/navbar';
 import RightSidebar from './components/right-sidebar/right-sidebar';
-import $ from 'jquery';
 import MediaPlayer from './components/media-player/media-player';
 
 
 export function App() {
+
   return (
     <Router>
       <div className='d-flex body'>

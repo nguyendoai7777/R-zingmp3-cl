@@ -2,8 +2,8 @@
 .sidebar {
   display: flex;
   justify-content: center;
-  background-color: var(--bg-purple-primary-dark);
   .sidebar-cover {
+    background-color: var(--bg-purple-primary-dark);
     width: 240px;
     height: 100%;
     transition: width .3s ease-out;
@@ -16,11 +16,41 @@
       height: calc(100vh - 396px);
     }
     .expand-side-btn {
+      display: none;
       width: 100%;
       border-radius: 0 !important;
       svg {
         margin-left: 7px;
       }
+    }
+    .logo {
+      &:last-child {
+        width: 40px;
+        display: none;
+      }
+      &:first-child {
+      }
+    }
+    &.sb-responsive {
+      width: 80px;
+      transition: .3s;
+      .logo {
+        &:last-child {
+          display: block;
+        }
+        &:first-child {
+          display: none;
+        }
+      }
+      .content, .to-login {
+        display: none;
+      }
+    }
+    &.lxp {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 5;
     }
   }
   .side-logo {
