@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import SidebarNavItem from './sidebar-nav-item/sidebar-nav-item';
 import { SIDEBAR_DATA, SIDEBAR_DATA_2 } from './constants';
 import { Button, IconButton } from '@material-ui/core';
-import { ArrowForward } from '@material-ui/icons';
+import { ArrowBack, ArrowForward } from '@material-ui/icons';
 
 
 const Sidebar = () => {
@@ -15,7 +15,6 @@ const Sidebar = () => {
     setExpandBarStatus(!expandBarStatus);
   };
   useEffect(() => {
-    console.log(expandBarStatus);
     window.addEventListener('resize', () => {
       const w = window.innerWidth;
       if (w < 1170) {
@@ -85,7 +84,7 @@ const Sidebar = () => {
             <Button className='lg-btn'>Đăng nhập</Button>
           </div>
           <Button className='expand-side-btn' onClick={expandBar}>
-            <ArrowForward />
+            {expandBarStatus ? <ArrowForward /> : <ArrowBack />}
           </Button>
         </div>
       </div>

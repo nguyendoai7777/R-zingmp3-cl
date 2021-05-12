@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './media-player.scss';
-import { IconButton, Slider, Tooltip } from '@material-ui/core';
-import { FavoriteBorder, MoreHoriz, VolumeOff, VolumeUp } from '@material-ui/icons';
+import { IconButton, Slider, Switch, Tab, Tabs, Tooltip } from '@material-ui/core';
+import { AccessAlarm, FavoriteBorder, MoreHoriz, VolumeOff, VolumeUp } from '@material-ui/icons';
 import MyTooltip from '../tooltip/tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import { OnPlay } from '../../../interfaces/action.interface';
@@ -9,8 +9,36 @@ import { SONG_LIST } from '../right-sidebar/data';
 import { LOOP_STATE, RANDOM_STATE, VOLUME_STATE } from './localStorage-constanrts';
 import { Link } from 'react-router-dom';
 import RedirectLink from '../redirect/redirect';
+import { withStyles } from '@material-ui/core/styles';
+import TabPanel from '../right-sidebar/tabpanel';
+import SelectSong from '../right-sidebar/select-song/select-song';
 
+function a11yProps(index: number) {
+  return {
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`
+  };
+}
+
+const PurpleSwitch = withStyles({
+  switchBase: {
+    color: '#7200A1',
+    '&$checked': {
+      color: '#c63bff !important'
+    },
+    '&$checked + $track': {
+      backgroundColor: '#c63bff !important'
+    }
+  },
+  checked: {},
+
+  track: {}
+})(Switch);
 const MediaPlayer = () => {
+    const [tabsValue, setTabsValue] = React.useState(0);
+    const handleTabsChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+      setTabsValue(newValue);
+    };
     // set localStorage for media actions button state
     const localLoopState = Number(localStorage.getItem(LOOP_STATE));
     if (!localLoopState) {
@@ -67,10 +95,16 @@ const MediaPlayer = () => {
       setCurrentVolume(newValue as number);
       audioRef.current.volume = newValue / 100;
     };
+    const clickV = () => {
+      if (currentVolume <= 80) {
+        subMedia.current.classList.remove('volume-warning');
+      }
+    };
     const toggleVolume = () => {
       if (currentVolume === 0) {
         setCurrentVolume(100);
       }
+
       setIsMute(!isMute);
     };
     useEffect(() => {
@@ -80,6 +114,10 @@ const MediaPlayer = () => {
       } else {
         audioRef.current.volume = currentVolume * ((isMute ? 0 : 1) / 100);
         !subMedia.current.classList.contains('volume-warning') && subMedia.current.classList.add('volume-warning');
+      }
+
+      if (currentVolume <= 80) {
+        subMedia.current.classList.remove('volume-warning');
       }
     }, [isMute]);
     useEffect(() => {
@@ -141,10 +179,6 @@ const MediaPlayer = () => {
       audioRef.current.addEventListener('timeupdate', _ => {
         const current = audioRef.current.currentTime;
         setTimePlaying(current);
-        const dur = Math.floor(audioRef.current.duration);
-        /* if (Math.floor(current) === dur) {
-           dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: false });
-         }*/
       });
       audioRef.current.addEventListener('ended', () => {
         audioRef.current.pause();
@@ -178,9 +212,24 @@ const MediaPlayer = () => {
         }, 20000);
       }
     }, []);
+
+    // ! full screen with lyrics
+    const [fsState, setFsState] = React.useState<boolean>(true);
+    const expandScreen = React.useRef<HTMLDivElement>(null);
+    const toggleExpandMedia = () => {
+      setFsState(!fsState);
+    };
+    useEffect(() => {
+      console.log(fsState);
+      if (fsState) {
+        expandScreen.current.classList.add('expand-wrapper');
+      } else {
+        expandScreen.current.classList.remove('expand-wrapper');
+      }
+    }, [fsState]);
     return (
       <div className='media-player-wrapper'>
-        <div className={`media-spacing d-flex align-items-center ${isPlay ? 'spl' : ''}`}>
+        <div className={`media-spacing d-flex align-items-center ${isPlay ? 'spl' : ''} ${fsState? 'tbc' : ''}`}>
           <div className='media-info d-flex align-items-center'>
             <div className={`media-thumb ${isPlay ? 'playing' : ''}`}>
               <div className='thumbnail'>
@@ -297,7 +346,7 @@ const MediaPlayer = () => {
             </MyTooltip>
             <MyTooltip title='Xem lời bài hát'>
               <div className='divided-icon-btn'>
-                <IconButton>
+                <IconButton onClick={toggleExpandMedia}>
                   <svg className='control-size-huge icon-control'>
                     <use xlinkHref='#micro' />
                   </svg>
@@ -315,6 +364,7 @@ const MediaPlayer = () => {
                 <Slider
                   value={currentVolume * (isMute ? 0 : 1)}
                   onChange={handleVolume}
+                  onClick={clickV}
                   aria-labelledby='continuous-slider'
                 />
 
@@ -328,6 +378,34 @@ const MediaPlayer = () => {
               </IconButton>
             </MyTooltip>
           </div>
+        </div>
+        <div className={`media-expand`} ref={expandScreen}>
+          {expandScreen &&
+          <div className='side-wrapper'>
+            <div className='side-action expand-header'>
+              <div className='tabs-control'>
+                <Tabs
+                  value={tabsValue}
+                  onChange={handleTabsChange}
+                  textColor='primary'
+                >
+                  <Tab label='Danh sách phát' {...a11yProps(0)} />
+                  <Tab label='Karaoke' {...a11yProps(1)} />
+                  <Tab label='Lời bài hát' {...a11yProps(2)} />
+                </Tabs>
+              </div>
+            </div>
+            <TabPanel value={tabsValue} index={0}>
+              Hello 1
+            </TabPanel>
+            <TabPanel value={tabsValue} index={1}>
+              Hello 2
+            </TabPanel>
+            <TabPanel value={tabsValue} index={2}>
+              Hello 3
+            </TabPanel>
+          </div>
+          }
         </div>
       </div>
     );

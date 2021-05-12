@@ -5,15 +5,26 @@ $warning: #ff5200;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: var(--bg-media-player);
+  z-index: 6;
   .spl {
     animation: is-playing-detected 10s infinite linear;
+  }
+  .tbc {
+    transition: .3s;
+    background-color: transparent !important;
   }
   .loop-active {
     fill: var(--purple-primary) !important;
   }
   .media-spacing {
+    transition: .3s;
     padding: 10px 35px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 6;
+    right: 0;
+    background-color: var(--bg-media-player);
   }
   .media-info {
     .media-thumb {
@@ -278,6 +289,38 @@ $warning: #ff5200;
     &:hover .tt-box {
       visibility: visible;
       opacity: 1;
+    }
+  }
+  .media-expand {
+    position: fixed;
+    top: 100%;
+    left: 0;
+    right: 0;
+    transition: .5s ease-out;
+    background-color: rgba(59, 6, 41, 1);
+    z-index: 5;
+    height: 100vh;
+    &.expand-wrapper {
+      transition: .5s ease-out;
+      top: 0;
+    }
+    .expand-header {
+      justify-content: center;
+      padding: 20px 0;
+      .tabs-control .MuiTabs-root .MuiTabs-scroller {
+        .MuiTabs-flexContainer {
+          .MuiButtonBase-root {
+            padding: 0 47px;
+            .MuiTab-wrapper {
+              font-size: 18px;
+              font-weight: bolder;
+            }
+          }
+        }
+        .MuiTabs-indicator {
+          height: 31px;
+        }
+      }
     }
   }
 }
