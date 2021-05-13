@@ -5,9 +5,10 @@ interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
+  scroll?: boolean;
 }
 
-const TabPanel: React.FC<TabPanelProps> = ({ index, value, children }) => {
+const TabPanel: React.FC<TabPanelProps> = ({ index, value, children, scroll = true }) => {
   return (
     <div
       role='tabpanel'
@@ -16,8 +17,8 @@ const TabPanel: React.FC<TabPanelProps> = ({ index, value, children }) => {
       aria-labelledby={`full-width-tab-${index}`}
     >
       {value === index && (
-        <Box p={2}>
-          <div className="app-scroll right-sidebar-box">{children}</div>
+        <Box>
+          {scroll ? <div className='app-scroll right-sidebar-box'>{children}</div> : <div>{children}</div>}
         </Box>
       )}
     </div>

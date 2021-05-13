@@ -32,44 +32,45 @@ const Discovery = () => {
       el.isActive = false;
     });
   };
-/*  useEffect(() => {
-    if (mp3) {
-      mp3.play();
-      mp3.volume = 1;
-    }
-  }, []);*/
+  /*  useEffect(() => {
+      if (mp3) {
+        mp3.play();
+        mp3.volume = 1;
+      }
+    }, []);*/
   return (
     <div className='dc'>
       <SlideGallery />
       <div className='dc-body'>
         <GroupBox title='Có thể bạn sẽ thích đấy'>
-          {ALBUM_LIST.map((el) => <div key={randomKey()} className='album-group'>
-            <div className='album-thumb'>
-              <div className='album-img'>
-                <img src={el.thumbnailUrl} alt='' />
-              </div>
-              <div className='album-overlay d-flex align-items-center'>
-                <div className='d-flex justify-content-around w-100'>
-                  <div className='media-song-actions d-flex align-items-center'>
-                    <IconButton className='l small-action'>
-                      <FavoriteBorder fontSize={'small'} />
-                    </IconButton>
-                    <IconButton className='c no-padding'>
-                      <div className='group-controller '>
-                        <svg>
-                          {!isPlay ? <use xlinkHref='#play' /> : <use xlinkHref='#pause' />}
-                        </svg>
-                      </div>
-                    </IconButton>
-                    <IconButton className='r small-action'>
-                      <MoreHoriz fontSize={'small'} />
-                    </IconButton>
+          {ALBUM_LIST.map((el) =>
+            <div key={randomKey()} className='album-group'>
+              <div className='album-thumb'>
+                <div className='album-img'>
+                  <img src={el.thumbnailUrl} alt='' />
+                </div>
+                <div className='album-overlay d-flex align-items-center'>
+                  <div className='d-flex justify-content-around w-100'>
+                    <div className='media-song-actions d-flex align-items-center'>
+                      <IconButton className='l small-action'>
+                        <FavoriteBorder fontSize={'small'} />
+                      </IconButton>
+                      <IconButton className='c no-padding'>
+                        <div className='group-controller '>
+                          <svg>
+                            {!isPlay ? <use xlinkHref='#play' /> : <use xlinkHref='#pause' />}
+                          </svg>
+                        </div>
+                      </IconButton>
+                      <IconButton className='r small-action'>
+                        <MoreHoriz fontSize={'small'} />
+                      </IconButton>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <Link className='album-nav' to={el.nav.url}>{el.nav.title}</Link>
-          </div>)}
+              <Link className='album-nav' to={el.nav.url}>{el.nav.title}</Link>
+            </div>)}
         </GroupBox>
         <GroupBox title='Nghe Gần Đây'>
           {ALBUM_LIST.map((el) => <div key={randomKey()} className='album-group'>

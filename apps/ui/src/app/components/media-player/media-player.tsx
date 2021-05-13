@@ -1,23 +1,28 @@
 import React, { useEffect, useRef } from 'react';
 import './media-player.scss';
-import { IconButton, Slider, Switch, Tab, Tabs, Tooltip } from '@material-ui/core';
-import { AccessAlarm, FavoriteBorder, MoreHoriz, VolumeOff, VolumeUp } from '@material-ui/icons';
+import { Button, ClickAwayListener, IconButton, Slider, Switch, Tab, Tabs, Tooltip } from '@material-ui/core';
+import { ArrowBack, ArrowBackIos, FavoriteBorder, MoreHoriz, Settings, VolumeOff, VolumeUp } from '@material-ui/icons';
 import MyTooltip from '../tooltip/tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import { OnPlay } from '../../../interfaces/action.interface';
 import { SONG_LIST } from '../right-sidebar/data';
 import { LOOP_STATE, RANDOM_STATE, VOLUME_STATE } from './localStorage-constanrts';
-import { Link } from 'react-router-dom';
 import RedirectLink from '../redirect/redirect';
 import { withStyles } from '@material-ui/core/styles';
 import TabPanel from '../right-sidebar/tabpanel';
-import SelectSong from '../right-sidebar/select-song/select-song';
+import CarouselExpandItem from './child-components/carousel-expand-item';
 
 function a11yProps(index: number) {
   return {
     id: `full-width-tab-${index}`,
     'aria-controls': `full-width-tabpanel-${index}`
   };
+}
+
+
+const enum ToolTipClickState {
+  open,
+  close
 }
 
 const PurpleSwitch = withStyles({
@@ -36,6 +41,7 @@ const PurpleSwitch = withStyles({
 })(Switch);
 const MediaPlayer = () => {
     const [tabsValue, setTabsValue] = React.useState(0);
+    // eslint-disable-next-line @typescript-eslint/ban-types
     const handleTabsChange = (event: React.ChangeEvent<{}>, newValue: number) => {
       setTabsValue(newValue);
     };
@@ -213,23 +219,54 @@ const MediaPlayer = () => {
       }
     }, []);
 
+
     // ! full screen with lyrics
     const [fsState, setFsState] = React.useState<boolean>(true);
+    const [showStState, setShowStState] = React.useState<boolean>(false);
     const expandScreen = React.useRef<HTMLDivElement>(null);
+    const stTarget = React.useRef(null);
     const toggleExpandMedia = () => {
       setFsState(!fsState);
     };
+    const handleClickTooltipAnyway = (type: ToolTipClickState) => {
+      if (type === ToolTipClickState.open) {
+        setShowStState(true);
+      } else if (type === ToolTipClickState.close) {
+        setShowStState(false);
+      }
+    };
     useEffect(() => {
-      console.log(fsState);
+
       if (fsState) {
         expandScreen.current.classList.add('expand-wrapper');
       } else {
         expandScreen.current.classList.remove('expand-wrapper');
       }
     }, [fsState]);
+
+    function lostTarget(ref) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useEffect(() => {
+        function handleClickOutside(event) {
+          if (ref.current && !ref.current.contains(event.target)) {
+            setShowStState(false);
+          }
+        }
+
+        // Bind the event listener
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          // Unbind the event listener on clean up
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, [ref]);
+    }
+
+    lostTarget(stTarget);
+
     return (
       <div className='media-player-wrapper'>
-        <div className={`media-spacing d-flex align-items-center ${isPlay ? 'spl' : ''} ${fsState? 'tbc' : ''}`}>
+        <div className={`media-spacing d-flex align-items-center ${isPlay ? 'spl' : ''} ${fsState ? 'tbc' : ''}`}>
           <div className='media-info d-flex align-items-center'>
             <div className={`media-thumb ${isPlay ? 'playing' : ''}`}>
               <div className='thumbnail'>
@@ -335,7 +372,7 @@ const MediaPlayer = () => {
             </div>
           </div>
           <div className='media-sub-actions d-flex align-items-center'>
-            <MyTooltip title='MV' arrow>
+            {!fsState && <MyTooltip title='MV' arrow>
               <div className='divided-icon-btn'>
                 <IconButton>
                   <svg className='control-size-huge icon-control'>
@@ -343,8 +380,8 @@ const MediaPlayer = () => {
                   </svg>
                 </IconButton>
               </div>
-            </MyTooltip>
-            <MyTooltip title='Xem lời bài hát'>
+            </MyTooltip>}
+            {!fsState && <MyTooltip title='Xem lời bài hát'>
               <div className='divided-icon-btn'>
                 <IconButton onClick={toggleExpandMedia}>
                   <svg className='control-size-huge icon-control'>
@@ -352,8 +389,8 @@ const MediaPlayer = () => {
                   </svg>
                 </IconButton>
               </div>
-            </MyTooltip>
-            <div className='d-flex align-items-center divided-icon-btn' style={{ paddingRight: '20px' }}>
+            </MyTooltip>}
+            <div className={`d-flex align-items-center divided-icon-btn ${fsState ? '_n' : ''}`} style={{ paddingRight: '20px' }}>
               <IconButton onClick={toggleVolume} className={`${currentVolume <= 80 || isMute ? '' : 'volume-warning-btn'} `}>
                 {currentVolume * (isMute ? 0 : 1) > 0 ?
                   <VolumeUp style={{ fontSize: '30px' }} /> :
@@ -370,13 +407,13 @@ const MediaPlayer = () => {
 
               </div>
             </div>
-            <MyTooltip title='Toàn màn hình' placement='top' arrow>
+            {!fsState && <MyTooltip title='Toàn màn hình' placement='top' arrow>
               <IconButton>
                 <svg className='control-size icon-control'>
                   <use xlinkHref='#expand' />
                 </svg>
               </IconButton>
-            </MyTooltip>
+            </MyTooltip>}
           </div>
         </div>
         <div className={`media-expand`} ref={expandScreen}>
@@ -394,14 +431,52 @@ const MediaPlayer = () => {
                   <Tab label='Lời bài hát' {...a11yProps(2)} />
                 </Tabs>
               </div>
+              <div className='expand-controls'>
+                <MyTooltip title='Toàn màn hình'>
+                  <IconButton className='icon-btn-hb'>
+                    <svg className='icon-control control-size'>
+                      <use xlinkHref='#expand' />
+                    </svg>
+                  </IconButton>
+                </MyTooltip>
+                <div className='st'>
+                  <MyTooltip title='Cài đặt' arrow placement='bottom'>
+                    <IconButton className='icon-btn-hb'
+                                onClick={() => setShowStState(!showStState)}
+                    ><Settings /></IconButton>
+                  </MyTooltip>
+                  {showStState && <div className='option-wrapper' ref={stTarget}>
+                    <div className='ang'>
+                      <Button className='option-item'>
+                        <div>Hình nền</div>
+                        <Switch />
+                      </Button>
+                      <Button className='option-item'>
+                        <div>Chỉ phát nhạc nền</div>
+                        <Switch />
+                      </Button>
+                      <Button disabled className='option-item' style={{ height: '38px' }}>
+                        <div>Chọn cỡ chữ phát nhạc</div>
+                      </Button>
+                    </div>
+                  </div>}
+                </div>
+                <MyTooltip title='Đóng'>
+                  <IconButton className='icon-btn-hb' onClick={() => setFsState(false)}>
+                    <ArrowBack style={{ transform: 'rotate(-90deg)' }} />
+                  </IconButton>
+                </MyTooltip>
+              </div>
             </div>
-            <TabPanel value={tabsValue} index={0}>
-              Hello 1
+            <TabPanel scroll={false} value={tabsValue} index={0}>
+
+              <CarouselExpandItem />
+
             </TabPanel>
-            <TabPanel value={tabsValue} index={1}>
+            <TabPanel scroll={false} value={tabsValue} index={1}>
               Hello 2
             </TabPanel>
-            <TabPanel value={tabsValue} index={2}>
+            <TabPanel scroll={false} value={tabsValue} index={2}>
               Hello 3
             </TabPanel>
           </div>

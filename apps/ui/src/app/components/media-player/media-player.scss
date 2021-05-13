@@ -245,6 +245,9 @@ $warning: #ff5200;
         width: 1px;
         background-color: #727272;
       }
+      &._n:after {
+        display: none;
+      }
     }
   }
   .control-size {
@@ -300,13 +303,30 @@ $warning: #ff5200;
     background-color: rgba(59, 6, 41, 1);
     z-index: 5;
     height: 100vh;
+    [role="tabpanel"] {
+      height: calc(100vh - 77px - 96px);
+      overflow: hidden;
+    }
     &.expand-wrapper {
       transition: .5s ease-out;
       top: 0;
     }
+    .side-wrapper {
+      background-color: #3b0629;
+    }
     .expand-header {
       justify-content: center;
       padding: 20px 0;
+      position: relative;
+      .expand-controls {
+        position: absolute;
+        display: flex;
+        z-index: 10;
+        align-items: center;
+        top: 50% ;
+        right: 0;
+        transform: translateY(-50%);
+      }
       .tabs-control .MuiTabs-root .MuiTabs-scroller {
         .MuiTabs-flexContainer {
           .MuiButtonBase-root {
@@ -322,8 +342,53 @@ $warning: #ff5200;
         }
       }
     }
+    #full-width-tabpanel-0 {
+      .MuiBox-root {
+        position: relative;
+        & > div {
+          height: 100%;
+          .slick-slider {
+            height: 100%;
+            .slick-list, .slick-track {
+              height: 100%;
+            }
+            .slick-slide {
+              display: flex;
+              align-items: center;
+              border: 1px solid transparent;
+            }
+            .slick-prev, .slick-next {
+              width: unset;
+              height: unset;
+              padding: 10px;
+              border-radius: 50%;
+              background-color: rgba(255, 255, 255, 0.1);
+              z-index: 6;
+              transition: .3s;
+              &:active {
+                background-color: deeppink;
+              }
+              &:before {
+                font-size: 30px;
+              }
+            }
+            .slick-center .cxi-box{
+              border: 1px solid #fff;
+            }
+            .slick-prev {
+              left: 20px;
+            }
+            .slick-next {
+              right: 20px;
+            }
+          }
+        }
+      }
+    }
   }
 }
+
+
 @keyframes auto-text {
   to {
     transform: translateX(-100%);

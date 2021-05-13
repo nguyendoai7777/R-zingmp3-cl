@@ -9,9 +9,7 @@ const SlideGallery = () => {
 
   useEffect(() => {
     const gallery = document.querySelectorAll('.gallery-data');
-
     setGalleryList(gallery);
-
   }, []);
   let index = 0;
   const resetClass = () => {
@@ -49,10 +47,10 @@ const SlideGallery = () => {
       galleryList[Math.abs(index + 5) % 5].classList.add('item-next');
     }
   };
-  const autoRun = setInterval(() => {
+/*  const autoRun = setInterval(() => {
     prevImage();
 
-  }, TIME_SLIDE);
+  }, TIME_SLIDE);*/
 
 
   return (

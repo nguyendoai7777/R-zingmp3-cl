@@ -40,8 +40,10 @@
     "react-redux": "^7.2.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
+    "react-slick": "^0.28.1",
     "redux": "^4.0.5",
     "regenerator-runtime": "0.13.7",
+    "slick-carousel": "^1.8.1",
     "tslib": "^2.0.0"
   },
   "devDependencies": {

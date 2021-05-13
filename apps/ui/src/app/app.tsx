@@ -14,7 +14,8 @@ import NotFound from './screens/not-found/not-found';
 import Navbar from './components/navbar/navbar';
 import RightSidebar from './components/right-sidebar/right-sidebar';
 import MediaPlayer from './components/media-player/media-player';
-
+import 'slick-carousel/slick/slick.scss';
+import 'slick-carousel/slick/slick-theme.scss';
 
 export function App() {
 
