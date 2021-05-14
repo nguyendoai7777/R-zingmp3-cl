@@ -267,6 +267,12 @@ bodY {
     border-radius: 5px;
     .ang {
       position: relative;
+      &.ang-home {
+        &:after {
+          right: 10px;
+          border-bottom: 10px solid var(--purple-primary) !important;
+        }
+      }
       &:after {
         content: "";
         display: block;
@@ -422,6 +428,26 @@ bodY {
       left: calc(100% - 80px);
     }
   }
+}
+.op {
+  transform-origin: top right;
+  animation: appearance .2s linear;
+}
+.he {
+  transform-origin: top right;
+  animation: lost .2s linear;
+}
+
+.popup-dd {
+  transition: .2s;
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: top right;
+}
+
+.show-pd {
+  transform: scale(1);
+  opacity: 1;
 }
 /* -- */
 @media (min-width: 600px) {

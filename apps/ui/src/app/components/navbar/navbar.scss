@@ -1,3 +1,4 @@
+@import "../../../styles/scss/keyframe";
 .appbar {
   display: flex;
   width: 100%;
@@ -45,5 +46,8 @@
         height: 25px;
       }
     }
+  }
+  .pt {
+    background-color: var(--purple-primary);
   }
 }

@@ -221,8 +221,9 @@ const MediaPlayer = () => {
 
 
     // ! full screen with lyrics
-    const [fsState, setFsState] = React.useState<boolean>(true);
+    const [fsState, setFsState] = React.useState<boolean>(false);
     const [showStState, setShowStState] = React.useState<boolean>(false);
+    const [fullScreenState, setFullScreenState] = React.useState<boolean>(false);
     const expandScreen = React.useRef<HTMLDivElement>(null);
     const stTarget = React.useRef(null);
     const toggleExpandMedia = () => {
@@ -243,6 +244,17 @@ const MediaPlayer = () => {
         expandScreen.current.classList.remove('expand-wrapper');
       }
     }, [fsState]);
+    const toggleRequestFullScreen = () => {
+      setFullScreenState(!fullScreenState);
+    };
+    useEffect(() => {
+      if (fullScreenState) {
+        document.body.requestFullscreen();
+
+      } else {
+        document.exitFullscreen();
+      }
+    }, [fullScreenState]);
 
     function lostTarget(ref) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -407,10 +419,10 @@ const MediaPlayer = () => {
 
               </div>
             </div>
-            {!fsState && <MyTooltip title='Toàn màn hình' placement='top' arrow>
-              <IconButton>
+            {!fsState && <MyTooltip title={!fullScreenState? 'Toàn màn hình' : 'Thoát toàn màn hinh'} placement='top' arrow>
+              <IconButton onClick={toggleRequestFullScreen}>
                 <svg className='control-size icon-control'>
-                  <use xlinkHref='#expand' />
+                  <use xlinkHref={!fullScreenState? '#expand' : '#exit-expand'} />
                 </svg>
               </IconButton>
             </MyTooltip>}
@@ -432,17 +444,18 @@ const MediaPlayer = () => {
                 </Tabs>
               </div>
               <div className='expand-controls'>
-                <MyTooltip title='Toàn màn hình'>
-                  <IconButton className='icon-btn-hb'>
+                <MyTooltip title={!fullScreenState? 'Toàn màn hình' : 'Thoát toàn màn hinh'}>
+                  <IconButton className='icon-btn-hb' onClick={toggleRequestFullScreen}>
                     <svg className='icon-control control-size'>
-                      <use xlinkHref='#expand' />
+                      <use xlinkHref={!fullScreenState? '#expand' : '#exit-expand'} />
                     </svg>
                   </IconButton>
                 </MyTooltip>
                 <div className='st'>
                   <MyTooltip title='Cài đặt' arrow placement='bottom'>
-                    <IconButton className='icon-btn-hb'
-                                onClick={() => setShowStState(!showStState)}
+                    <IconButton
+                      className='icon-btn-hb'
+                      onClick={() => setShowStState(!showStState)}
                     ><Settings /></IconButton>
                   </MyTooltip>
                   {showStState && <div className='option-wrapper' ref={stTarget}>
