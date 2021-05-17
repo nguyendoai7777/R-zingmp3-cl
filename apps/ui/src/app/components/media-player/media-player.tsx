@@ -11,6 +11,9 @@ import RedirectLink from '../redirect/redirect';
 import { withStyles } from '@material-ui/core/styles';
 import TabPanel from '../right-sidebar/tabpanel';
 import CarouselExpandItem from './child-components/carousel-expand-item';
+import { onPlayReducer } from '../../../redux/reducers/on-play.reducer';
+import { CombinedState } from 'redux';
+import { CombineActions } from '../../../redux/store/store';
 
 function a11yProps(index: number) {
   return {
@@ -39,6 +42,7 @@ const PurpleSwitch = withStyles({
 
   track: {}
 })(Switch);
+
 const MediaPlayer = () => {
     const [tabsValue, setTabsValue] = React.useState(0);
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -81,7 +85,7 @@ const MediaPlayer = () => {
       setTimePlaying(val);
       audioRef.current.currentTime = val;
     };
-    const isPlay = useSelector<OnPlay, OnPlay['isPlaying']>((state) => state.isPlaying);
+    const isPlay = useSelector<CombineActions>((state) => state.onPlayReducer.isPlaying);
     const dispatch = useDispatch();
 
     const setPlay = () => {
@@ -89,7 +93,7 @@ const MediaPlayer = () => {
     };
     useEffect(() => {
       if (isPlay) {
-        audioRef.current.play();
+        audioRef.current.play().then();
       } else {
         audioRef.current.pause();
       }
@@ -244,37 +248,20 @@ const MediaPlayer = () => {
         expandScreen.current.classList.remove('expand-wrapper');
       }
     }, [fsState]);
+    let cd = false;
     const toggleRequestFullScreen = () => {
       setFullScreenState(!fullScreenState);
-    };
-    useEffect(() => {
-      if (fullScreenState) {
-        document.body.requestFullscreen();
-
-      } else {
-        document.exitFullscreen();
-      }
-    }, [fullScreenState]);
-
-    function lostTarget(ref) {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useEffect(() => {
-        function handleClickOutside(event) {
-          if (ref.current && !ref.current.contains(event.target)) {
-            setShowStState(false);
-          }
+      cd = !cd;
+      try {
+        if (!document.fullscreenElement) {
+          document.body.requestFullscreen().then();
+        } else {
+          document.exitFullscreen().then();
         }
-
-        // Bind the event listener
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-          // Unbind the event listener on clean up
-          document.removeEventListener('mousedown', handleClickOutside);
-        };
-      }, [ref]);
-    }
-
-    lostTarget(stTarget);
+      } catch (e) {
+        console.log(e);
+      }
+    };
 
     return (
       <div className='media-player-wrapper'>
@@ -419,10 +406,10 @@ const MediaPlayer = () => {
 
               </div>
             </div>
-            {!fsState && <MyTooltip title={!fullScreenState? 'Toàn màn hình' : 'Thoát toàn màn hinh'} placement='top' arrow>
+            {!fsState && <MyTooltip title={!fullScreenState ? 'Toàn màn hình' : 'Thoát toàn màn hinh'} placement='top' arrow>
               <IconButton onClick={toggleRequestFullScreen}>
                 <svg className='control-size icon-control'>
-                  <use xlinkHref={!fullScreenState? '#expand' : '#exit-expand'} />
+                  <use xlinkHref={!fullScreenState ? '#expand' : '#exit-expand'} />
                 </svg>
               </IconButton>
             </MyTooltip>}
@@ -444,10 +431,10 @@ const MediaPlayer = () => {
                 </Tabs>
               </div>
               <div className='expand-controls'>
-                <MyTooltip title={!fullScreenState? 'Toàn màn hình' : 'Thoát toàn màn hinh'}>
+                <MyTooltip title={!fullScreenState ? 'Toàn màn hình' : 'Thoát toàn màn hinh'}>
                   <IconButton className='icon-btn-hb' onClick={toggleRequestFullScreen}>
                     <svg className='icon-control control-size'>
-                      <use xlinkHref={!fullScreenState? '#expand' : '#exit-expand'} />
+                      <use xlinkHref={!fullScreenState ? '#expand' : '#exit-expand'} />
                     </svg>
                   </IconButton>
                 </MyTooltip>
