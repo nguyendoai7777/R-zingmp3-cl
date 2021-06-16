@@ -17,8 +17,12 @@ import { SONG_LIST } from '../../components/right-sidebar/data';
 import { SongProfile } from '../../components/right-sidebar/interface';
 import MixChoice from './mix-choice/mix-choice';
 
-const url = '../../../assets/audio/giua-dai-lo-dong-tay.mp3';
-const mp3 = new Audio(url);
+const url: string[] = [
+  '../../../assets/audio/giua-dai-lo-dong-tay.mp3',
+  '../../../assets/audio/nonstop.mp3',
+  '../../../assets/audio/tim-hanh-tinh-khac.mp3',
+];
+
 
 
 const Discovery = () => {

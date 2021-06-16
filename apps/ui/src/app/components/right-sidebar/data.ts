@@ -1,5 +1,36 @@
 import { SongProfile } from './interface';
 
+export const REAL_SONG_LIST: SongProfile[] = [
+  {
+    songName: 'Giữa Đại Lộ Đông Tây',
+    songArtist: [
+      { artistName: 'Uyên Linh', profileUrl: 'vn-Uyen-Link', songUrl: '../../../assets/audio/giua-dai-lo-dong-tay.mp3' }
+    ],
+    thumb: 'https://data.chiasenhac.com/data/cover/139/138656.jpg'
+  },
+  {
+    songName: 'Tìm Hành Tinh Khác',
+    songArtist: [
+      { artistName: 'Vũ Cát Tường', profileUrl: 'vn-Vu-Cat-Tuong', songUrl: '../../../assets/audio/tim-hanh-tinh-khac.flac' }
+    ],
+    thumb: 'https://photo-resize-zmp3.zadn.vn/w320_r1x1_jpeg/cover/8/6/e/4/86e402843eafafa74d6e1a3b8ee288d6.jpg'
+    // thumb: 'https://photo-resize-zmp3.zadn.vn/w94_r1x1_jpeg/cover/e/2/f/3/e2f3da512dcd104613f3b4151ce67438.jpg'
+  },
+  {
+    songName: 'Unstoppable',
+    songArtist: [
+      { artistName: 'Sia', profileUrl: 'us-Sia', songUrl: '../../../assets/audio/nonstop.mp3' }
+    ],
+    thumb: 'https://photo-resize-zmp3.zadn.vn/w94_r1x1_jpeg/cover/4/e/3/5/4e3549de2a8730e2bba6fdce451632b2.jpg'
+  },
+  {
+    songName: 'Đố Anh Đoán Được',
+    songArtist: [
+      { artistName: 'Bích Phương', profileUrl: 'vn-bich-phuong', songUrl: '../../../assets/audio/do-anh-doan-duoc.mp3' }
+    ],
+    thumb: 'https://i.ytimg.com/vi/N4lzUrEMgT0/maxresdefault.jpg'
+  }
+];
 export const SONG_LIST: SongProfile[] = [
   {
     songName: 'Giữa Đại Lộ Đông Tây',
@@ -11,7 +42,7 @@ export const SONG_LIST: SongProfile[] = [
   {
     songName: 'Tìm Hành Tinh Khác',
     songArtist: [
-      { artistName: 'Vũ Cát Tường', profileUrl: 'vn-Vu-Cat-Tuong', songUrl: '../../../assets/audio/nonstop.mp3' }
+      { artistName: 'Vũ Cát Tường', profileUrl: 'vn-Vu-Cat-Tuong', songUrl: '../../../assets/audio/tim-hanh-tinh-khac.flac' }
     ],
     thumb: 'https://photo-resize-zmp3.zadn.vn/w320_r1x1_jpeg/cover/8/6/e/4/86e402843eafafa74d6e1a3b8ee288d6.jpg'
     // thumb: 'https://photo-resize-zmp3.zadn.vn/w94_r1x1_jpeg/cover/e/2/f/3/e2f3da512dcd104613f3b4151ce67438.jpg'

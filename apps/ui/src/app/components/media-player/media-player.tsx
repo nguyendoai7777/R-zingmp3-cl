@@ -1,18 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import './media-player.scss';
-import { Button, ClickAwayListener, IconButton, Slider, Switch, Tab, Tabs, Tooltip } from '@material-ui/core';
-import { ArrowBack, ArrowBackIos, FavoriteBorder, MoreHoriz, Settings, VolumeOff, VolumeUp } from '@material-ui/icons';
+import { Button, IconButton, Slider, Switch, Tab, Tabs } from '@material-ui/core';
+import { ArrowBack, FavoriteBorder, MoreHoriz, Settings, VolumeOff, VolumeUp } from '@material-ui/icons';
 import MyTooltip from '../tooltip/tooltip';
 import { useDispatch, useSelector } from 'react-redux';
-import { OnPlay } from '../../../interfaces/action.interface';
-import { SONG_LIST } from '../right-sidebar/data';
+import { REAL_SONG_LIST } from '../right-sidebar/data';
 import { LOOP_STATE, RANDOM_STATE, VOLUME_STATE } from './localStorage-constanrts';
 import RedirectLink from '../redirect/redirect';
 import { withStyles } from '@material-ui/core/styles';
 import TabPanel from '../right-sidebar/tabpanel';
 import CarouselExpandItem from './child-components/carousel-expand-item';
-import { onPlayReducer } from '../../../redux/reducers/on-play.reducer';
-import { CombinedState } from 'redux';
 import { CombineActions } from '../../../redux/store/store';
 
 function a11yProps(index: number) {
@@ -91,12 +88,15 @@ const MediaPlayer = () => {
     const setPlay = () => {
       dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: isPlay });
     };
-    useEffect(() => {
+    const handleIsPlay = () => {
       if (isPlay) {
         audioRef.current.play().then();
       } else {
         audioRef.current.pause();
       }
+    };
+    useEffect(() => {
+      handleIsPlay();
     }, [isPlay]);
     //! end audio controller
 
@@ -141,18 +141,7 @@ const MediaPlayer = () => {
     }, [currentVolume]);
 
     //! end volume
-    const setRandom = () => {
-      const a = localStorage.getItem(RANDOM_STATE);
-      let x: string;
-      if (a === 'true') {
-        x = 'false';
-        localStorage.setItem(RANDOM_STATE, x);
-      } else if (a === 'false') {
-        x = 'true';
-        localStorage.setItem(RANDOM_STATE, x);
-      }
-      setRandomState(x);
-    };
+
     //! set loop
     const setLoop = () => {
       const loop = Number(localStorage.getItem(LOOP_STATE));
@@ -223,7 +212,6 @@ const MediaPlayer = () => {
       }
     }, []);
 
-
     // ! full screen with lyrics
     const [fsState, setFsState] = React.useState<boolean>(false);
     const [showStState, setShowStState] = React.useState<boolean>(false);
@@ -262,7 +250,77 @@ const MediaPlayer = () => {
         console.log(e);
       }
     };
+    // process next, preview song
+    const [currentOrderSong, setOrderCurrentSong] = React.useState(0);
+    const onNext = (random?: boolean, randomIndex?: number) => {
+      if (!random) {
+        if (currentOrderSong < REAL_SONG_LIST.length - 1) {
+          setOrderCurrentSong(currentOrderSong + 1);
+          dispatch({ type: 'CHANGE_PLAYING_SONG', payload: isPlay });
+        } else {
+          return;
+        }
+      } else {
+        if (currentOrderSong < REAL_SONG_LIST.length - 1) {
+          setOrderCurrentSong(randomIndex);
+          dispatch({ type: 'CHANGE_PLAYING_SONG', payload: isPlay });
+        } else {
+          return;
+        }
+      }
+    };
+    
+    const [rdNumberNotRepeat, setRdNumberNotRepeat] = React.useState<number[]>([]);
+    const getRandomNumberSongNotRepeat = () => {
+      const rd = Math.floor(Math.random() * (REAL_SONG_LIST.length));
+      setRdNumberNotRepeat([...rdNumberNotRepeat, rd]);
+      console.log(rdNumberNotRepeat);
+      if (rdNumberNotRepeat.length > 1 && rdNumberNotRepeat[rdNumberNotRepeat.length - 1] === rdNumberNotRepeat[rdNumberNotRepeat.length - 2]) {
+        console.log('bi lap roi nay');
+        return getRandomNumberSongNotRepeat();
+      } else {
+        console.log('ngon 2');
+        return rdNumberNotRepeat[rdNumberNotRepeat.length - 1];
+      }
+    };
+    useEffect(() => {
+      const d = getRandomNumberSongNotRepeat();
+      console.log(d);
+    }, [randomState]);
+    const next = () => {
+      if (randomState === 'true') {
+        onNext(true, getRandomNumberSongNotRepeat());
+      } else {
+        onNext(false);
+      }
+    };
+    const onPrev = () => {
+      if (currentOrderSong === 0) {
+        return;
+      } else if (currentOrderSong >= REAL_SONG_LIST.length - 1) {
+        setOrderCurrentSong(currentOrderSong - 1);
+        dispatch({ type: 'CHANGE_PLAYING_SONG', payload: isPlay });
+      } else {
+        setOrderCurrentSong(currentOrderSong - 1);
+        dispatch({ type: 'CHANGE_PLAYING_SONG', payload: isPlay });
+      }
+    };
+    const onRandomSong = () => {
+      const a = localStorage.getItem(RANDOM_STATE);
+      let x: string;
+      if (a === 'true') {
+        x = 'false';
+        localStorage.setItem(RANDOM_STATE, x);
+      } else if (a === 'false') {
+        x = 'true';
+        localStorage.setItem(RANDOM_STATE, x);
+      }
+      setRandomState(x);
+    };
 
+    useEffect(() => {
+      handleIsPlay();
+    }, [currentOrderSong]);
     return (
       <div className='media-player-wrapper'>
         <div className={`media-spacing d-flex align-items-center ${isPlay ? 'spl' : ''} ${fsState ? 'tbc' : ''}`}>
@@ -270,7 +328,7 @@ const MediaPlayer = () => {
             <div className={`media-thumb ${isPlay ? 'playing' : ''}`}>
               <div className='thumbnail'>
                 <div className='thumbnail-effect'>
-                  <img src={SONG_LIST[0].thumb} alt='' />
+                  <img src={REAL_SONG_LIST[currentOrderSong].thumb} alt='' />
                 </div>
                 <svg className='note note-1'>
                   <use xlinkHref='#note-1' />
@@ -296,15 +354,15 @@ const MediaPlayer = () => {
                 {
                   parentWidth < targetWidth ?
                     <div className='song-name no-wrap' ref={nameTarget}>
-                      {SONG_LIST[0].songName} &nbsp;&nbsp;&nbsp;&nbsp; {SONG_LIST[0].songName}
+                      {REAL_SONG_LIST[currentOrderSong].songName} &nbsp;&nbsp;&nbsp;&nbsp; {REAL_SONG_LIST[currentOrderSong].songName}
                     </div> :
                     <div className='song-name no-wrap' ref={nameTarget}>
-                      {SONG_LIST[0].songName}
+                      {REAL_SONG_LIST[currentOrderSong].songName}
                     </div>
                 }
               </div>
               <div className='song-artist'>
-                <RedirectLink pathName={SONG_LIST[0].songArtist[0].artistName} contentName={SONG_LIST[0].songArtist[0].artistName} />
+                <RedirectLink pathName={REAL_SONG_LIST[currentOrderSong].songArtist[0].artistName} contentName={REAL_SONG_LIST[currentOrderSong].songArtist[0].artistName} />
               </div>
             </div>
             <div className='media-song-actions ms-2'>
@@ -320,14 +378,14 @@ const MediaPlayer = () => {
             <div className='control-group-btn'>
               <div className='icon-btn-group d-flex align-items-center'>
                 <MyTooltip title={`${randomState === 'true' ? 'Bật' : 'Tắt'} phát ngẫu nhiên`}>
-                  <IconButton style={{ transform: 'rotate(90deg)' }} onClick={setRandom}>
+                  <IconButton style={{ transform: 'rotate(90deg)' }} onClick={onRandomSong}>
                     <svg className={`icon-control ${randomState === 'true' ? 'icon-control-active' : ''}`} height={22} width={22}>
                       <use xlinkHref='#random' />
                     </svg>
                   </IconButton>
                 </MyTooltip>
                 <MyTooltip title='Phát lại bài vừa qua' arrow>
-                  <IconButton>
+                  <IconButton onClick={onPrev}>
                     <svg className='control-size icon-control'>
                       <use xlinkHref='#pn' />
                     </svg>
@@ -341,7 +399,7 @@ const MediaPlayer = () => {
                   </IconButton>
                 </div>
                 <MyTooltip title='Phát bài kế tiếp' arrow>
-                  <IconButton style={{ transform: 'rotate(180deg)' }}>
+                  <IconButton onClick={next} style={{ transform: 'rotate(180deg)' }}>
                     <svg className='control-size icon-control'>
                       <use xlinkHref='#pn' />
                     </svg>
@@ -364,7 +422,7 @@ const MediaPlayer = () => {
                     max={Math.floor(audioTimerDuration)}
                     aria-labelledby='continuous-slider'
                   />
-                  <audio controls id='app-audio' ref={audioRef} style={{ display: 'none' }} src={SONG_LIST[0].songArtist[0].songUrl} />
+                  <audio controls id='app-audio' ref={audioRef} style={{ display: 'none' }} src={REAL_SONG_LIST[currentOrderSong].songArtist[0].songUrl} />
                 </div>
                 <div className='played-time ps-3'>{audioDuration(audioTimerDuration)}</div>
               </div>
