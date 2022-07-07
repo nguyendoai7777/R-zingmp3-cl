@@ -81,6 +81,9 @@ const MediaPlayer = () => {
       const val = newValue as number;
       setTimePlaying(val);
       audioRef.current.currentTime = val;
+      if(!isPlay) {
+        setPlay()
+      }
     };
     const isPlay = useSelector<CombineActions>((state) => state.onPlayReducer.isPlaying);
     const dispatch = useDispatch();
@@ -181,6 +184,10 @@ const MediaPlayer = () => {
       });
       audioRef.current.addEventListener('ended', () => {
         audioRef.current.pause();
+        next();
+        setTimeout(() => {
+          setPlay()
+        }, 50);
         dispatch({ type: 'TOGGLE_PLAYING_SONG', payload: false });
       });
     }, [dispatch]);
