@@ -246,7 +246,7 @@ const MediaPlayer = () => {
           document.exitFullscreen().then();
         }
       } catch (e) {
-        console.log(e);
+        //  console.log(e);
       }
     };
     // process next, preview song
@@ -268,17 +268,17 @@ const MediaPlayer = () => {
         }
       }
     };
-    
+
     const [rdNumberNotRepeat, setRdNumberNotRepeat] = React.useState<number[]>([]);
     const getRandomNumberSongNotRepeat = () => {
       const rd = Math.floor(Math.random() * (REAL_SONG_LIST.length));
       setRdNumberNotRepeat([...rdNumberNotRepeat, rd]);
-      console.log(rdNumberNotRepeat);
+      // console.log(rdNumberNotRepeat);
       if (rdNumberNotRepeat.length > 1 && rdNumberNotRepeat[rdNumberNotRepeat.length - 1] === rdNumberNotRepeat[rdNumberNotRepeat.length - 2]) {
-        console.log('bi lap roi nay');
+        // console.log('bi lap roi nay');
         return getRandomNumberSongNotRepeat();
       } else {
-        console.log('ngon 2');
+        // console.log('ngon 2');
         return rdNumberNotRepeat[rdNumberNotRepeat.length - 1];
       }
     };
@@ -319,12 +319,12 @@ const MediaPlayer = () => {
           if(e.target === document.body) {
             e.preventDefault();
           }
-        } 
+        }
       })
     }, []);
     useEffect(() => {
       const d = getRandomNumberSongNotRepeat();
-      console.log(d);
+      // console.log(d);
     }, [randomState]);
     useEffect(() => {
       handleIsPlay();

@@ -4,7 +4,7 @@ export const REAL_SONG_LIST: SongProfile[] = [
   {
     songName: 'Đố Anh Đoán Được',
     songArtist: [
-      { artistName: 'Bích Phương', profileUrl: 'vb-Bich-Phuong', songUrl: 'https://mp3-s1-zmp3.zmdcdn.me/61fba41efe5f17014e4e/1838401064245217353?authen=exp=1657336603~acl=/61fba41efe5f17014e4e/*~hmac=6f8368ce8bd229991824e0b91efba791&fs=MTY1NzE2MzgwMzQ3NHx3ZWJWNnwwfDIyMi4yNTIdUngMjYdUngMjA5' }
+      { artistName: 'Bích Phương', profileUrl: 'vb-Bich-Phuong', songUrl: '../../assets/audio/do-anh-doan-duoc.mp3' }
     ],
     thumb: 'https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_webp/cover/4/e/8/8/4e883fed7bd8e28fe6dd53ddeb700533.jpg'
   },
