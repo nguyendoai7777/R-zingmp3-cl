@@ -31,6 +31,8 @@ $warning: #ff5200;
       .thumbnail {
         position: relative;
         .thumbnail-effect {
+          border-radius: 50%;
+          overflow: hidden;
           animation-play-state: paused;
           -webkit-animation-play-state: paused;
           -webkit-animation-name: infinity-rotate;
@@ -41,6 +43,9 @@ $warning: #ff5200;
           animation-iteration-count: infinite;
           -webkit-animation-timing-function: linear;
           animation-timing-function: linear;
+          img {
+            transform: scale(1.3);
+          }
         }
         .note {
           width: 10px;

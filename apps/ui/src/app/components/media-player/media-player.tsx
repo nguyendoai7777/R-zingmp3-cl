@@ -228,14 +228,6 @@ const MediaPlayer = () => {
         setShowStState(false);
       }
     };
-    useEffect(() => {
-
-      if (fsState) {
-        expandScreen.current.classList.add('expand-wrapper');
-      } else {
-        expandScreen.current.classList.remove('expand-wrapper');
-      }
-    }, [fsState]);
     let cd = false;
     const toggleRequestFullScreen = () => {
       setFullScreenState(!fullScreenState);
@@ -283,10 +275,6 @@ const MediaPlayer = () => {
         return rdNumberNotRepeat[rdNumberNotRepeat.length - 1];
       }
     };
-    useEffect(() => {
-      const d = getRandomNumberSongNotRepeat();
-      console.log(d);
-    }, [randomState]);
     const next = () => {
       if (randomState === 'true') {
         onNext(true, getRandomNumberSongNotRepeat());
@@ -317,10 +305,30 @@ const MediaPlayer = () => {
       }
       setRandomState(x);
     };
-
+    useEffect(() => {
+      window.addEventListener('keydown', (e: KeyboardEvent ) => {
+        if(e.keyCode === 32 || e.code === 'Space') {
+          setPlay()
+          if(e.target === document.body) {
+            e.preventDefault();
+          }
+        } 
+      })
+    }, []);
+    useEffect(() => {
+      const d = getRandomNumberSongNotRepeat();
+      console.log(d);
+    }, [randomState]);
     useEffect(() => {
       handleIsPlay();
     }, [currentOrderSong]);
+    useEffect(() => {
+      if (fsState) {
+        expandScreen.current.classList.add('expand-wrapper');
+      } else {
+        expandScreen.current.classList.remove('expand-wrapper');
+      }
+    }, [fsState]);
     return (
       <div className='media-player-wrapper'>
         <div className={`media-spacing d-flex align-items-center ${isPlay ? 'spl' : ''} ${fsState ? 'tbc' : ''}`}>
