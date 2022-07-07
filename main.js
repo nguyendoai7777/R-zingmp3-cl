@@ -2055,7 +2055,7 @@ const REAL_SONG_LIST = [{
   songArtist: [{
     artistName: 'Bích Phương',
     profileUrl: 'vb-Bich-Phuong',
-    songUrl: 'https://vnno-vn-5-tf-mp3-s1-zmp3.zmdcdn.me/cdc615234f62a63cff73/1071947203698078819?authen=exp=1657336438~acl=/cdc615234f62a63cff73/*~hmac=ac9f3c7d7515ff8009e5a618f6a798d7&fs=MTY1NzE2MzYzODgwMnx3ZWJWNnwwfDIxMC4yNDUdUngMzQdUngMTE5'
+    songUrl: 'https://dl.tainhacvip.com/wp-content/uploads/Dố-Anh-Doán-Dược-Remix-Tiktok-Bich-Phuong-x-DJ-TiLo.mp3'
   }],
   thumb: 'https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_webp/cover/4/e/8/8/4e883fed7bd8e28fe6dd53ddeb700533.jpg'
 }, {
